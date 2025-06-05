@@ -1,0 +1,52 @@
+#
+# Load Cell Example Application Configuration
+#
+
+config EXAMPLES_LOADCELL
+    bool "Enable Load Cell Example"
+    default n
+    ---help---
+        Enable the Load Cell example application.
+
+if EXAMPLES_LOADCELL
+
+config EXAMPLES_LOADCELL_NUM_CHANNELS
+    int "Number of Load Cell Channels"
+    default 2
+    range 1 8
+    help
+        Number of load cell channels used by the system.
+
+config EXAMPLES_LOADCELL_RATED_KG
+    int "Maximum Load Cell Weight (kg)"
+    default 100
+    help
+        The maximum measurable weight by the load cell (used for scaling).
+
+config EXAMPLES_LOADCELL_PROGNAME
+    string "Load Cell program name"
+    default "loadcell"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the Load Cell reader.
+
+config EXAMPLES_LOADCELL_CMDTOOL
+    tristate "Enable NSH Command for Load Cell"
+    default n
+    help
+        Adds a command-line tool to NSH for interacting with the Load Cell driver. Useful for manual testing or integration.
+
+
+config EXAMPLES_LOADCELL_PRIORITY
+	int "Load Cell task priority"
+	default 100
+	---help---
+		Priority of the Load Cell measurement task if run as a background thread.
+
+config EXAMPLES_LOADCELL_STACKSIZE
+	int "Load Cell stack size"
+	default DEFAULT_TASK_STACKSIZE
+	---help---
+		Stack size for the Load Cell measurement task.
+
+endif
+
