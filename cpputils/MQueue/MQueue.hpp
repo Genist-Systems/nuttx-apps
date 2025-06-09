@@ -10,7 +10,7 @@
 enum class MqResult {
     Success,
     NotOpen,
-    MessageTooLarge,
+    InvalidMessageSize,
     QueueFull,
     QueueEmpty,
     SysError
