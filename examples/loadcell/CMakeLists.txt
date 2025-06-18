@@ -20,23 +20,16 @@
 #
 # ##############################################################################
 
+
 if(CONFIG_EXAMPLES_LOADCELL)
-
-  if(CONFIG_EXAMPLES_LOADCELL_CMDTOOL)
-    nuttx_add_application(
-      NAME
-      ${CONFIG_EXAMPLES_LOADCELL_PROGNAME}
-      PRIORITY
-      ${CONFIG_EXAMPLES_LOADCELL_PRIORITY}
-      STACKSIZE
-      ${CONFIG_EXAMPLES_LOADCELL_STACKSIZE}
-      MODULE
-      ${CONFIG_EXAMPLES_LOADCELL_CMDTOOL}
-      SRCS
-      loadcell_main.c)
-  endif()
-
-  nuttx_add_library(loadcell STATIC)
-  target_sources(loadcell PRIVATE loadcell.c)
-
+  nuttx_add_application(
+    NAME
+    ${CONFIG_EXAMPLES_LOADCELL_PROGNAME}
+    SRCS
+    loadcell_main.cxx
+    STACKSIZE
+    ${CONFIG_EXAMPLES_LOADCELL_STACKSIZE}
+    PRIORITY
+    ${CONFIG_EXAMPLES_LOADCELL_PRIORITY})
 endif()
+

@@ -23,15 +23,24 @@
 
 include $(APPDIR)/Make.defs
 
-BIN   = loadcell$(LIBEXT)
-CSRCS = loadcell.c
+PROGNAME  = $(CONFIG_EXAMPLES_LOADCELL_PROGNAME)
+PRIORITY  = $(CONFIG_EXAMPLES_LOADCELL_PRIORITY)
+STACKSIZE = $(CONFIG_EXAMPLES_LOADCELL_STACKSIZE)
+MODULE    = $(CONFIG_EXAMPLES_LOADCELL)
 
-ifneq ($(CONFIG_EXAMPLES_LOADCELL_CMDTOOL),)
-  PROGNAME  = $(CONFIG_EXAMPLES_LOADCELL_PROGNAME)
-  PRIORITY  = $(CONFIG_EXAMPLES_LOADCELL_PRIORITY)
-  STACKSIZE = $(CONFIG_EXAMPLES_LOADCELL_STACKSIZE)
-  MODULE    = $(CONFIG_EXAMPLES_LOADCELL_CMDTOOL)
-  MAINSRC   = loadcell_main.c
-endif
+# Source files
+CSRCS =
+CXXSRCS = NAU7802.cxx \
+          TCA9548A.cxx \
+          LoadCellController.cxx \
+          loadcell_main.cxx \
+          ../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces/esp32_gpio.cxx \
+          ../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces/esp32_i2c.cxx
+
+
+# Include path to peripheral_namespaces
+CXXFLAGS += -I../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces
+
 
 include $(APPDIR)/Application.mk
+

@@ -1,4 +1,9 @@
+#pragma once
+
+#include "esp32_peripherals.hpp"
+
 #include <cstdint>
+#include <nuttx/clock.h>
 
 /** Default NAU7802 I2C address. */
 #define NAU7802_I2CADDR_DEFAULT 0x2A ///< I2C address
@@ -23,6 +28,7 @@ typedef enum _ldovoltages {
   NAU7802_2V7,
   NAU7802_2V4,
   NAU7802_EXTERNAL,
+  NAU7802_INVALID,
 } NAU7802_LDOVoltage;
 
 /*! The possible gains */
@@ -35,6 +41,7 @@ typedef enum _gains {
   NAU7802_GAIN_32,
   NAU7802_GAIN_64,
   NAU7802_GAIN_128,
+  NAU7802_GAIN_INVALID,
 } NAU7802_Gain;
 
 /*! The possible sample rates */
@@ -44,6 +51,7 @@ typedef enum _sample_rates {
   NAU7802_RATE_40SPS = 2,
   NAU7802_RATE_80SPS = 3,
   NAU7802_RATE_320SPS = 7,
+  NAU7802_RATE_INVALID = 0xFF
 } NAU7802_SampleRate;
 
 /*! The possible calibration modes */
@@ -53,31 +61,33 @@ typedef enum _calib_mode {
   NAU7802_CALMOD_GAIN = 3,
 } NAU7802_Calibration;
 
-/**************************************************************************/
-/*!
-    @brief  NAU7802 driver.
-*/
-/**************************************************************************/
+using namespace ESP32::I2C;
+
 class NAU7802 {
 public:
-    NAU7802();
-    bool begin(TwoWire *theWire = &Wire);
-    bool reset(void);
-    bool enable(bool flag);
-    bool available(void);
-    int32_t read(void);
+    NAU7802(const char* devPath, struct i2c_config_s* config);
+    ~NAU7802();
 
+    bool begin();
+    bool reset();
+    bool enable(bool);
+    bool available();
+    int32_t read();
     bool setChannel(uint8_t channel);
+
     bool setLDO(NAU7802_LDOVoltage voltage);
-    NAU7802_LDOVoltage getLDO(void);
+    NAU7802_LDOVoltage getLDO();
+
     bool setGain(NAU7802_Gain gain);
-    NAU7802_Gain getGain(void);
-    bool setRate(NAU7802_SampleRate gain);
-    NAU7802_SampleRate getRate(void);
+    NAU7802_Gain getGain();
+
+    bool setRate(NAU7802_SampleRate rate);
+    NAU7802_SampleRate getRate();
+
     bool calibrate(NAU7802_Calibration mode);
 
 private:
-    Adafruit_I2CRegister *_pu_ctrl_reg = NULL;
-    Adafruit_I2CDevice *i2c_dev = NULL;
-
+    const char* _devPath;
+    struct i2c_config_s* _config;
+    I2C_Master _i2c;
 };

@@ -74,7 +74,7 @@ extern "C" int test_main(int argc, char *argv[])
     pwm_config.frequency = 1000; // 1 kHz
     pwm_config.duty = b16divi(uitoub16(30), 100); // 50%
 
-    if (!pwm.setup("/dev/pwm0", pwm_config))
+    if (!pwm.setup("/dev/pwm0", &pwm_config))
     {
         printf("PWM setup failed\n");
         return 1;
@@ -100,7 +100,7 @@ extern "C" int test_main(int argc, char *argv[])
 
     I2C_Master i2c;
     const char* devName = "/dev/i2c0";
-    if (!i2c.setup(devName, i2c_config))
+    if (!i2c.setup(devName, &i2c_config))
     {
         printf("I2C0 setup failed\n");
     }

@@ -21,7 +21,5 @@
 ############################################################################/
 
 ifneq ($(CONFIG_EXAMPLES_LOADCELL),)
-EXTRA_LIBS += -ltest
-EXTRA_LIBPATHS += -L$(APPDIR)/examples/loadcell
 CONFIGURED_APPS += $(APPDIR)/examples/loadcell
 endif
