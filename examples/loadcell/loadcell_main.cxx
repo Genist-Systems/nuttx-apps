@@ -24,19 +24,15 @@
  * Included Files
  ****************************************************************************/
 
+#include "loadcell_main.hpp"
 #include "LoadCellController.hpp"
+#include <nuttx/i2c/i2c_master.h>
 
 /****************************************************************************
  * Defines
  ****************************************************************************/
 
-#ifndef CONFIG_EXAMPLES_LOADCELL_NUM_CHANNELS
-#define CONFIG_EXAMPLES_LOADCELL_NUM_CHANNELS 2
-#endif
 
-#ifndef CONFIG_EXAMPLES_LOADCELL_RATED_KG
-#define CONFIG_EXAMPLES_LOADCELL_RATED_KG 100
-#endif
 
 /****************************************************************************
  * Public Functions
@@ -48,7 +44,45 @@
 
 
 
-int main(int argc, FAR char *argv[])
+extern "C" int loadcell_main(int argc, FAR char *argv[])
 {
+    struct NAU7802Config load_cell_config
+    {
+        .enable = true,
+        .ldoVoltage = NAU7802_3V3,
+        .gain = NAU7802_GAIN_128,
+        .sampleRate = NAU7802_RATE_10SPS,
+        .calibrationMode = NAU7802_CALMOD_INTERNAL
+    };
+
+    struct i2c_config_s i2c_config
+    {
+        .frequency = 400000,   
+        .address = 0x2A,     
+        .addrlen = 7,           
+    };
+
+
+    struct TCA9548APins i2c_mux_pins
+    {
+        .sel2 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_2,
+        .sel1 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_1,
+        .sel0 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_0
+    };
+
+    LoadCellController controller = LoadCellController(&load_cell_config, 
+                        CONFIG_EXAMPLES_I2C_FD, 
+                        &i2c_config,
+                        &i2c_mux_pins, 
+                        CONFIG_EXAMPLES_LOADCELL_RATED_KG);
+
+    controller.begin();
+
+    controller.run();
+
+
+    return 0;
+
+
   
 }
