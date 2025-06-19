@@ -39,83 +39,115 @@
 using namespace ESP32::GPIO;
 using namespace ESP32::PWM;
 using namespace ESP32::I2C;
+using namespace ESP32::SPI;
 
 
 
 extern "C" int test_main(int argc, char *argv[])
 {
     
-    printf("test_main\r\n");
+    // printf("test_main\r\n");
 
 
-    GPIO gpio0;
-    // PinStatus val0, val1, val2;
+    // GPIO gpio0;
+    // // PinStatus val0, val1, val2;
 
-    const char* dev0 = "/dev/gpio0";
+    // const char* dev0 = "/dev/gpio0";
 
 
-    // Set all as output
-    if (!gpio0.setPinType(dev0, GPIO_OUTPUT_PIN)) {
-        printf("Failed to initialize GPIOs\r\n");
+    // // Set all as output
+    // if (!gpio0.setPinType(dev0, GPIO_OUTPUT_PIN)) {
+    //     printf("Failed to initialize GPIOs\r\n");
+    //     return 1;
+    // }
+
+    // // Turn them on
+
+    // bool no_problem = true;
+
+    // no_problem &= gpio0.writePin(PinStatus::GPIO_HIGH);
+
+    // printf("Write result: %s\r\n", no_problem ? "SUCCESS" : "FAILURE");
+
+    // PWM pwm;
+
+    // pwm_info_s pwm_config;
+    // pwm_config.frequency = 1000; // 1 kHz
+    // pwm_config.duty = b16divi(uitoub16(30), 100); // 50%
+
+    // if (!pwm.setup("/dev/pwm0", &pwm_config))
+    // {
+    //     printf("PWM setup failed\n");
+    //     return 1;
+    // }
+
+    // if (!pwm.start())
+    // {
+    //     printf("PWM start failed\n");
+    //     return 1;
+    // }
+
+    // printf("PWM running at 1 kHz, 50%% duty cycle\n");
+
+
+
+
+    // // Step 1: I2C config for TCS3472
+    // i2c_config_s i2c_config = {
+    //     .frequency = 400000,  // Max supported by the TCS3472
+    //     .address = 0x29,      // TCS3472 I2C address
+    //     .addrlen = 7
+    // };
+
+    // I2C_Master i2c;
+    // const char* devName = "/dev/i2c0";
+    // if (!i2c.setup(devName, &i2c_config))
+    // {
+    //     printf("I2C0 setup failed\n");
+    // }
+
+    // // Step 2: Read the ID register (0x12)
+    // uint8_t id = 0;
+    // if (!i2c.readRegister(0x12, &id, 1))
+    // {
+    //     printf("I2C0: Failed to read TCS3472 ID register\n");
+    // }
+    // else
+    // {
+    //     printf("I2C0: TCS3472 ID register = 0x%02X\n", id);
+    // }
+
+
+
+    const char* spiDevice = "/dev/spislv2";  // Change if needed
+    SPI_Slave spi;
+
+    if (!spi.setup(spiDevice, 5 /* timeout in seconds */, false /* blocking */)) {
+        printf("Failed to set up SPI slave.\n");
         return 1;
     }
 
-    // Turn them on
+    const size_t bufferSize = 64;
+    uint8_t buffer[bufferSize];
+    size_t receivedBytes = 0;
 
-    bool no_problem = true;
+    printf("Waiting to receive SPI data...\n");
 
-    no_problem &= gpio0.writePin(PinStatus::GPIO_HIGH);
+    while (true) {
+        if (spi.receive(buffer, bufferSize, receivedBytes)) {
+            printf("Received %zu bytes: ", receivedBytes);
+            for (size_t i = 0; i < receivedBytes; ++i) {
+                printf("%02X ", buffer[i]);
+            }
+            printf("\n");
+        } else {
+            printf("Failed to receive data or timeout occurred.\n");
+        }
 
-    printf("Write result: %s\r\n", no_problem ? "SUCCESS" : "FAILURE");
-
-    PWM pwm;
-
-    pwm_info_s pwm_config;
-    pwm_config.frequency = 1000; // 1 kHz
-    pwm_config.duty = b16divi(uitoub16(30), 100); // 50%
-
-    if (!pwm.setup("/dev/pwm0", &pwm_config))
-    {
-        printf("PWM setup failed\n");
-        return 1;
+        // Optional: add delay or exit condition here
     }
 
-    if (!pwm.start())
-    {
-        printf("PWM start failed\n");
-        return 1;
-    }
-
-    printf("PWM running at 1 kHz, 50%% duty cycle\n");
-
-
-
-
-    // Step 1: I2C config for TCS3472
-    i2c_config_s i2c_config = {
-        .frequency = 400000,  // Max supported by the TCS3472
-        .address = 0x29,      // TCS3472 I2C address
-        .addrlen = 7
-    };
-
-    I2C_Master i2c;
-    const char* devName = "/dev/i2c0";
-    if (!i2c.setup(devName, &i2c_config))
-    {
-        printf("I2C0 setup failed\n");
-    }
-
-    // Step 2: Read the ID register (0x12)
-    uint8_t id = 0;
-    if (!i2c.readRegister(0x12, &id, 1))
-    {
-        printf("I2C0: Failed to read TCS3472 ID register\n");
-    }
-    else
-    {
-        printf("I2C0: TCS3472 ID register = 0x%02X\n", id);
-    }
-
+    spi.shutdown();
     
     while (1); // Block forever
 

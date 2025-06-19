@@ -14,7 +14,7 @@ TCA9548A::TCA9548A(const char* sel2, const char* sel1, const char* sel0)
     setSelect(0);
 }
 
-TCA9548A::~TCA9548A(){}
+TCA9548A::~TCA9548A() {}
 
 bool TCA9548A::setSelect(uint8_t newSelect)
 {
