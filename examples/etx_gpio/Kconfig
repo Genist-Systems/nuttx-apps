@@ -1,0 +1,32 @@
+#
+# EmbeTronicX GPIO Example Application Configuration
+#
+
+config EXAMPLES_ETX_GPIO
+    bool "EmbeTronicX GPIO Example"
+    default n
+    depends on ARCH_CHIP_ESP32
+    help
+      Enables the EmbeTronicX GPIO interrupt example for ESP32.
+
+if EXAMPLES_ETX_GPIO
+
+config EXAMPLES_ETX_GPIO_PROGNAME
+    string "Program name"
+    default "etx_gpio"
+    help
+      Name of the NSH command or ELF binary that will be installed and run.
+
+config EXAMPLES_ETX_GPIO_PRIORITY
+    int "Task priority"
+    default 100
+    help
+      Task priority of the GPIO example app.
+
+config EXAMPLES_ETX_GPIO_STACKSIZE
+    int "Stack size"
+    default DEFAULT_TASK_STACKSIZE
+    help
+      Stack size for the GPIO example task.
+
+endif

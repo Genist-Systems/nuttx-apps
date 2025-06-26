@@ -28,6 +28,7 @@
 #include "esp32_peripherals.hpp"
 
 
+
 /****************************************************************************
  * Public Functions
  ****************************************************************************/
@@ -35,18 +36,38 @@
 /****************************************************************************
  * test_main
  ****************************************************************************/
+// ESP #1 info
+// wlan0	Link encap:Ethernet HWaddr 30:c9:22:ff:73:b4 at UP mtu 1504
+// 	inet addr:10.0.0.2 DRaddr:10.0.0.1 Mask:255.255.255.0
+// 	inet6 addr: fc00::2/112
+// 	inet6 DRaddr: fc00::1
+
+// ESP #2 info
+// wlan0	Link encap:Ethernet HWaddr 2c:bc:bb:6e:b6:3c at UP mtu 1504
+// 	inet addr:10.0.0.2 DRaddr:10.0.0.1 Mask:255.255.255.0
+// 	inet6 addr: fc00::2/112
+// 	inet6 DRaddr: fc00::1
+
+
 
 using namespace ESP32::GPIO;
-using namespace ESP32::PWM;
-using namespace ESP32::I2C;
-using namespace ESP32::SPI;
+// using namespace ESP32::PWM;
+// using namespace ESP32::I2C;
+// using namespace ESP32::SPI;
+// using namespace ESP32::WiFi::TCP;
 
 
+// const uint8_t trusted_mac[6] = { 0x30, 0xC9, 0x22, 0xFF, 0x73, 0xB4 };
+// const uint8_t peer_mac0[6] = { 0x2C, 0xBC, 0xBB, 0x6E, 0xB6, 0x3C };
+
+void myInterruptHandler() {
+    printf("GPIO interrupt fired!\n");
+}
 
 extern "C" int test_main(int argc, char *argv[])
 {
     
-    // printf("test_main\r\n");
+    printf("test_main\r\n");
 
 
     // GPIO gpio0;
@@ -68,6 +89,28 @@ extern "C" int test_main(int argc, char *argv[])
     // no_problem &= gpio0.writePin(PinStatus::GPIO_HIGH);
 
     // printf("Write result: %s\r\n", no_problem ? "SUCCESS" : "FAILURE");
+
+     GPIO gpio;
+
+    if (!gpio.setPinType("/dev/gpio2", GPIO_INTERRUPT_PIN)) {
+        fprintf(stderr, "Failed to set pin type\n");
+        return 1;
+    }
+
+    if (!gpio.attachInterrupt(SIGUSR1, myInterruptHandler)) {
+        fprintf(stderr, "Failed to attach interrupt\n");
+        return 1;
+    }
+
+    while (true) {
+        pause();  // Wait for signal
+    }
+    // // Block forever — actual ISR does the work
+    // while (true) {
+    //     sleep(1);
+    // }
+
+
 
     // PWM pwm;
 
@@ -119,39 +162,169 @@ extern "C" int test_main(int argc, char *argv[])
 
 
 
-    const char* spiDevice = "/dev/spislv2";  // Change if needed
-    SPI_Slave spi;
+    // const char* spiDevice = "/dev/spislv2";  // Change if needed
+    // SPI_Slave spi;
 
-    if (!spi.setup(spiDevice, 5 /* timeout in seconds */, false /* blocking */)) {
-        printf("Failed to set up SPI slave.\n");
-        return 1;
-    }
+    // if (!spi.setup(spiDevice, 5 /* timeout in seconds */, false /* blocking */)) {
+    //     printf("Failed to set up SPI slave.\n");
+    //     return 1;
+    // }
 
-    const size_t bufferSize = 64;
-    uint8_t buffer[bufferSize];
-    size_t receivedBytes = 0;
+    // const size_t bufferSize = 64;
+    // uint8_t buffer[bufferSize];
+    // size_t receivedBytes = 0;
 
-    printf("Waiting to receive SPI data...\n");
+    // printf("Waiting to receive SPI data...\n");
 
-    while (true) {
-        if (spi.receive(buffer, bufferSize, receivedBytes)) {
-            printf("Received %zu bytes: ", receivedBytes);
-            for (size_t i = 0; i < receivedBytes; ++i) {
-                printf("%02X ", buffer[i]);
-            }
-            printf("\n");
-        } else {
-            printf("Failed to receive data or timeout occurred.\n");
-        }
+    // while (true) {
+    //     if (spi.receive(buffer, bufferSize, receivedBytes)) {
+    //         printf("Received %zu bytes: ", receivedBytes);
+    //         for (size_t i = 0; i < receivedBytes; ++i) {
+    //             printf("%02X ", buffer[i]);
+    //         }
+    //         printf("\n");
+    //     } else {
+    //         printf("Failed to receive data or timeout occurred.\n");
+    //     }
 
-        // Optional: add delay or exit condition here
-    }
+    //     // Optional: add delay or exit condition here
+    // }
 
-    spi.shutdown();
+    // spi.shutdown();
     
-    while (1); // Block forever
+    // while (1); // Block forever
+
+//     if (argc != 2)
+//   {
+//     printf("Usage: %s <server_ip>\n", argv[0]);
+//     return 1;
+//   }
+
+//   TCPClient client(argv[1], 5000); // port must match server
+
+//   if (!client.connectToServer())
+//   {
+//     printf("Failed to connect to server.\n");
+//     return 1;
+//   }
+
+//   while (true)
+//   {
+//     protocolo_ipc msg;
+//     msg.opcode = 'U';
+//     msg.msg_size = 4;
+//     snprintf((char*)msg.msg, sizeof(msg.msg), "0102");
+
+//     if (!client.sendMessage(msg))
+//     {
+//       printf("Failed to send message.\n");
+//       break;
+//     }
+
+//     protocolo_ipc response;
+//     if (!client.receiveMessage(response))
+//     {
+//       printf("Failed to receive response.\n");
+//       break;
+//     }
+
+//     sleep(5);
+//   }
+
+//   client.closeSocket();
+//   return 0;
+
+    // const char* ip = "10.0.0.3";
+    // const char* ifname = "wlan0";
+    // const char* ssid = "MyTestAP";
+    // const char* password = "12345678";
+
+    // TCPServer server(5000, ip, ifname, ssid, password);
+
+    // if (!server.init())
+    // {
+    //     printf("Server init failed\n");
+    //     return -1;
+    // }
+
+    // if (!server.acceptClient())
+    // {
+    //     printf("Client accept failed\n");
+    //     return -1;
+    // }
+
+    // int received_number;
+
+    // while (1)
+    // {
+    //     if (!server.receiveMessage(received_number))
+    //     {
+    //         printf("Failed to receive integer\n");
+    //         return -1;
+    //     }
+
+    //     printf("Server received: %d\n", received_number);
+
+    //     received_number += 1;
+
+    //     if (!server.sendMessage(received_number))
+    //     {
+    //         printf("Failed to send response\n");
+    //         return -1;
+    //     }
+
+    //     printf("Server sent: %d\n", received_number);
+    // }
+    
+
+    
+
+    // server.closeAll();
+    // return 0;
+
+    //  const char* server_ip = "10.0.0.3";
+    //  const char* client_ip = "10.0.0.4";
+    // const char* ifname = "wlan0";
+    // const char* ssid = "MyTestAP";
+    // const char* password = "12345678";
+
+    // TCPClient client(5000, server_ip, client_ip, ifname, ssid, password);
+
+    // if (!client.connectToServer())
+    // {
+    //     printf("Client connection failed\n");
+    //     return -1;
+    // }
+
+    // int num = 123;
+    // while(1)
+    // {
+    // if (!client.sendMessage(num))
+    //     {
+    //         printf("Failed to send\n");
+    //         return -1;
+    //     }
+
+    //     printf("Client sent: %d\n", num);
+
+    //     int response = 0;
+    //     if (!client.receiveMessage(response))
+    //     {
+    //         printf("Failed to receive\n");
+    //         return -1;
+    //     }
+
+    //     printf("Client received: %d\n", response);
+    // }
+    
+
+    
 
     return 0;
+
+    
+    
+
 
 }
 
