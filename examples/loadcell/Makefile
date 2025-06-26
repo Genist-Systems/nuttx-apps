@@ -34,12 +34,13 @@ CXXSRCS = NAU7802.cxx \
           TCA9548A.cxx \
           LoadCellController.cxx \
           loadcell_main.cxx \
-          ../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces/esp32_gpio.cxx \
-          ../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces/esp32_i2c.cxx
+          $(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx \
+          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx
+
 
 
 # Include path to peripheral_namespaces
-CXXFLAGS += -I../../../nuttx/boards/xtensa/esp32/esp32-devkitc/peripheral_namespaces
+CXXFLAGS += 
 
 
 include $(APPDIR)/Application.mk
