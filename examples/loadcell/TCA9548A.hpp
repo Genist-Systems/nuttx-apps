@@ -1,6 +1,6 @@
 #pragma once
 
-#include "esp32_peripherals.hpp"
+#include "esp32_peripherals/esp32_peripherals.hpp"
 
 #include <cstdint>
 #include <array>

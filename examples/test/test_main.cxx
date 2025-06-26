@@ -25,7 +25,7 @@
  ****************************************************************************/
 
 #include <nuttx/config.h>
-#include "esp32_peripherals.hpp"
+#include "esp32_peripherals/esp32_peripherals.hpp"
 
 
 
