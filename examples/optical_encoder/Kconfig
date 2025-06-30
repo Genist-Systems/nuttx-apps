@@ -1,0 +1,61 @@
+#
+# Optical Encoder Example Application Configuration
+#
+
+config EXAMPLES_OPTICAL_ENCODER
+    bool "Optical Encoder Example"
+    default n
+    ---help---
+        Optical Encoder example application.
+
+if EXAMPLES_OPTICAL_ENCODER
+
+config EXAMPLES_OPTICAL_ENCODER_PROGNAME
+    string "Optical Encoder program name"
+    default "optical_encoder"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the Optical Encoder reader.
+
+config EXAMPLES_OPTICAL_ENCODER_PRIORITY
+    int "Optical Encoder task priority"
+    default 100
+    ---help---
+        Priority of the Optical Encoder task if run as a background thread.
+
+config EXAMPLES_OPTICAL_ENCODER_STACKSIZE
+    int "Optical Encoder stack size"
+    default DEFAULT_TASK_STACKSIZE
+    ---help---
+        Stack size for the Optical Encoder task.
+
+config EXAMPLES_OPTICAL_ENCODER_GPIOA
+    string "GPIO device for encoder channel A"
+    default "/dev/gpio4"
+    help
+        Path to the GPIO device that serves as channel A of the optical encoder.
+
+config EXAMPLES_OPTICAL_ENCODER_GPIOB
+    string "GPIO device for encoder channel B"
+    default "/dev/gpio3"
+    help
+        Path to the GPIO device that serves as channel B of the optical encoder.
+
+config EXAMPLES_OPTICAL_ENCODER_PPR
+    int "Number of Pulses Per Revolution"
+    default 24
+    help 
+        Number of Pulses per Revolution for one rotation.
+
+config EXAMPLES_OPTICAL_ENCODER_INITIAL_LENGTH_METERS
+    int "Initial cable length in meters"
+    default 0
+    help
+        The starting length of the cable wound on the drum, in meters.
+
+config EXAMPLES_OPTICAL_ENCODER_AVERAGE_DRUM_RADIUS_MM
+    int "Average drum radius in millimeters"
+    default 100
+    help
+        The average radius of the winch drum in millimeters. Used to calculate linear velocity.
+
+endif
