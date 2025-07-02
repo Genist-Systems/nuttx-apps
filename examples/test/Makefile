@@ -12,10 +12,14 @@ MODULE    = $(CONFIG_EXAMPLES_TEST)
 # Source files
 CSRCS = 
 CXXSRCS = test_main.cxx \
-          
-# Include paths
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx \
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_pwm.cxx \
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_spi.cxx \
+        $(TOPDIR)/drivers/esp32_peripherals/esp32_tcp.cxx \
 
+# Include paths
 CFLAGS +=
-CXXFLAGS += 
+CXXFLAGS +=
 
 include $(APPDIR)/Application.mk
