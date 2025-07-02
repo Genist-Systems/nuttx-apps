@@ -2,7 +2,7 @@
 
 class MQueue {
 public:
-    MQueue(const std::string& name,
+    MQueue(const char* name,
            mode_t mode = 0644,
            long maxMsg = 10,
            long msgSize = 256)
@@ -14,9 +14,9 @@ public:
         attr.mq_msgsize = msgSize;
         attr.mq_curmsgs = 0;
 
-        _mq = mq_open(_name.c_str(), O_RDWR | O_NONBLOCK);
+        _mq = mq_open(_name, O_RDWR | O_NONBLOCK);
         if (_mq == static_cast<mqd_t>(-1) && errno == ENOENT) {
-            _mq = mq_open(_name.c_str(), O_CREAT | O_RDWR | O_NONBLOCK, mode, &attr);
+            _mq = mq_open(_name, O_CREAT | O_RDWR | O_NONBLOCK, mode, &attr);
         }
     }
 
@@ -24,7 +24,7 @@ public:
         if (_mq != static_cast<mqd_t>(-1)) {
             mq_close(_mq);
         }
-        mq_unlink(_name.c_str());
+        mq_unlink(_name);
     }
 
     template<typename T>

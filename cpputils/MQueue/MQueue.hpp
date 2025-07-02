@@ -18,29 +18,29 @@ enum class MqResult {
 
 
 class MQueue {
-public:
-    MQueue(const std::string& name,
-           int flags = O_CREAT | O_RDWR | O_NONBLOCK,
-           mode_t mode = 0644,
-           long maxMsg = 10,
-           long msgSize = 256);
+    public:
+        MQueue(const char* name,
+            int flags = O_CREAT | O_RDWR | O_NONBLOCK,
+            mode_t mode = 0644,
+            long maxMsg = 10,
+            long msgSize = 256);
 
-    ~MQueue();
+        ~MQueue();
 
-    template<typename T>
-    MqResult send(const T& data, unsigned int priority = 0) const;
+        template<typename T>
+        MqResult send(const T& data, unsigned int priority = 0) const;
 
-    template<typename T>
-    MqResult receive(T& outData, unsigned int* priority = nullptr) const;
+        template<typename T>
+        MqResult receive(T& outData, unsigned int* priority = nullptr) const;
 
-    template<typename T>
-    MqResult receiveMostRecent(T& outData) const;
+        template<typename T>
+        MqResult receiveMostRecent(T& outData) const;
 
 
-    bool getAttr(struct mq_attr& attr) const;
+        bool getAttr(struct mq_attr& attr) const;
 
-private:
-    std::string _name;
-    mqd_t _mq = (mqd_t)-1;
-    size_t _msgSize;
+    private:
+        const char* _name;
+        mqd_t _mq = (mqd_t)-1;
+        size_t _msgSize;
 };
