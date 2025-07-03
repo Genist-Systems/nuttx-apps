@@ -21,15 +21,15 @@
 # ##############################################################################
 
 
-if(CONFIG_EXAMPLES_MASTERCONTROLLER)
+if(CONFIG_EXAMPLES_LOADCELL)
   nuttx_add_application(
     NAME
-    ${CONFIG_EXAMPLES_MASTERCONTROLLER_PROGNAME}
+    ${CONFIG_EXAMPLES_LOADCELL_PROGNAME}
     SRCS
-    master_controller_main.cxx
+    loadcell_main.cxx
     STACKSIZE
-    ${CONFIG_EXAMPLES_MASTERCONTROLLER_STACKSIZE}
+    ${CONFIG_EXAMPLES_LOADCELL_STACKSIZE}
     PRIORITY
-    ${CONFIG_EXAMPLES_MASTERCONTROLLER_PRIORITY})
+    ${CONFIG_EXAMPLES_LOADCELL_PRIORITY})
 endif()
 

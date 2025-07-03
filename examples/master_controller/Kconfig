@@ -1,0 +1,33 @@
+#
+# Master Controller Example Application Configuration
+#
+
+config EXAMPLES_MASTER_CONTROLLER
+    bool "Master Controller Example"
+    default n
+    help
+        Master Controller example application.
+
+if EXAMPLES_MASTER_CONTROLLER
+
+config EXAMPLES_MASTER_CONTROLLER_PROGNAME
+    string "Master Controller program name"
+    default "master_controller"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the Master Controller.
+
+config EXAMPLES_MASTER_CONTROLLER_PRIORITY
+    int "Master Controller task priority"
+    default 100
+    help
+        Priority of the Master Controller task if run as a background thread.
+
+config EXAMPLES_MASTER_CONTROLLER_STACKSIZE
+    int "Master Controller stack size"
+    default DEFAULT_TASK_STACKSIZE
+    help
+        Stack size for the Master Controller task.
+
+endif
+
+
