@@ -1,26 +1,24 @@
 #include "MQueue.hpp"
 
 
-MQueue::MQueue(const char* name,
-               int flags,
-               mode_t mode,
-               long maxMsg,
-               long msgSize)
-    : _name(name), _msgSize(msgSize)
+MQueue::MQueue(const char* name, const MQueue_Settings& settings)
+   : _name(name), _msgSize(settings.msgSize)
 {
-    struct mq_attr attr {};
-    attr.mq_flags = 0;
-    attr.mq_maxmsg = maxMsg;
-    attr.mq_msgsize = msgSize;
-    attr.mq_curmsgs = 0;
+   struct mq_attr attr {};
+   attr.mq_flags   = 0;
+   attr.mq_maxmsg  = settings.maxMsg;
+   attr.mq_msgsize = settings.msgSize;
+   attr.mq_curmsgs = 0;
 
-    // Always create with O_CREAT, ignore ENOENT logic
-    _mq = mq_open(_name, flags | O_CREAT, mode, &attr);
 
-    if (_mq == static_cast<mqd_t>(-1)) {
-        printf("MQueue ERROR: mq_open failed (errno=%d)\n", errno);
-    }
+   _mq = mq_open(_name, settings.flags, settings.mode, &attr);
+
+
+   if (_mq == static_cast<mqd_t>(-1)) {
+       printf("MQueue ERROR: mq_open failed (errno=%d)\n", errno);
+   }
 }
+
 
 
 
