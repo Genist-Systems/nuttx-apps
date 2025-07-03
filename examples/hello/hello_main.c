@@ -38,6 +38,5 @@
 int main(int argc, FAR char *argv[])
 {
   printf("Hello, World!!\n");
-  se tbews
   return 0;
 }

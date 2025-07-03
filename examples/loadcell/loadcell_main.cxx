@@ -46,6 +46,11 @@
 
 extern "C" int loadcell_main(int argc, FAR char *argv[])
 {
+    // while(1)
+    // {
+    //     printf("loadcell\r\n");
+    // }
+    
     struct NAU7802Config load_cell_config
     {
         .enable = true,

@@ -42,6 +42,11 @@
 extern "C" int optical_encoder_main(int argc, FAR char *argv[])
 {
 
+    // while(1)
+    // {
+    //     printf("optical encoder\r\n");
+    // }
+    
     OpticalEncoderController controller = OpticalEncoderController(CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOA, 
                                                                     CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOB, 
                                                                     CONFIG_EXAMPLES_OPTICAL_ENCODER_PPR,

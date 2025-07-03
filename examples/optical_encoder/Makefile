@@ -31,12 +31,8 @@ MODULE    = $(CONFIG_EXAMPLES_OPTICAL_ENCODER)
 # Source files
 CSRCS =
 CXXSRCS = optical_encoder_main.cxx \
-          OpticalEncoderController.cxx \
-          $(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx
 
-
-
-# Include path to peripheral_namespaces
 CXXFLAGS += 
 
 
