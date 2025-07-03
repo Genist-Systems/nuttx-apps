@@ -50,19 +50,19 @@ extern "C" int loadcell_main(int argc, FAR char *argv[])
     
     
   
-    MQueue mq("/mqtest", O_CREAT | O_RDWR | O_NONBLOCK, 0644, 8, sizeof(MyMessage));
+    // MQueue mq("/mqtest", O_CREAT | O_RDWR | O_NONBLOCK, 0644, 8, sizeof(MyMessage));
 
 
-    int id = 0;
-    while (1) {
-        MyMessage msg = {id++, id * 1.5f};
-        MqResult res = mq.send(msg);
+    // int id = 0;
+    // while (1) {
+    //     MyMessage msg = {id++, id * 1.5f};
+    //     MqResult res = mq.send(msg);
 
-        printf("[Sender] Sent id=%d, value=%.2f => result=%d\n", msg.id, msg.value, static_cast<int>(res));
-        sleep(1);
-    }
+    //     printf("[Sender] Sent id=%d, value=%.2f => result=%d\n", msg.id, msg.value, static_cast<int>(res));
+    //     sleep(1);
+    // }
 
-    return 0;
+    // return 0;
 
     
     struct NAU7802Config load_cell_config
