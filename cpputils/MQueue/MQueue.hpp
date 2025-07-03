@@ -7,6 +7,15 @@
 #include <cerrno>
 #include <cstdio>
 
+struct MQueue_Settings
+{
+    int flags = O_CREAT | O_RDWR | O_NONBLOCK;
+    mode_t mode = 0644;
+    long maxMsg = 8;
+    long msgSize = 32;
+
+};
+
 enum class MqResult {
     Success,
     NotOpen,
@@ -19,11 +28,7 @@ enum class MqResult {
 
 class MQueue {
     public:
-        MQueue(const char* name,
-                int flags = O_CREAT | O_RDWR | O_NONBLOCK,
-                mode_t mode = 0644,
-                long maxMsg = 10,
-                long msgSize = 256);
+        MQueue::MQueue(const char* name, const MQueue_Settings& settings);
 
 
         ~MQueue();
