@@ -31,9 +31,15 @@ MODULE    = $(CONFIG_EXAMPLES_OPTICAL_ENCODER)
 # Source files
 CSRCS =
 CXXSRCS = optical_encoder_main.cxx \
-		$(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx \
+		$(APPDIR)/cpputils/MQueue/MQueue.cxx
 
-CXXFLAGS += 
+
+
+CXXFLAGS += -I$(APPDIR)/cpputils/MQueue
+CXXFLAGS += -I$(APPDIR)/examples/loadcell
+
+
 
 
 include $(APPDIR)/Application.mk

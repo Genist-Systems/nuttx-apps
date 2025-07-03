@@ -23,3 +23,8 @@
 #ifndef CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_2
 #  define CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_2 "/dev/gpio2"
 #endif
+
+struct MyMessage {
+    int id;
+    float value;
+};

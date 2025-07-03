@@ -35,12 +35,12 @@ CXXSRCS = NAU7802.cxx \
           LoadCellController.cxx \
           loadcell_main.cxx \
           $(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx \
-          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx
+          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
+          $(APPDIR)/cpputils/MQueue/MQueue.cxx
 
 
 
-# Include path to peripheral_namespaces
-CXXFLAGS += 
+CXXFLAGS += -I$(APPDIR)/cpputils/MQueue
 
 
 include $(APPDIR)/Application.mk
