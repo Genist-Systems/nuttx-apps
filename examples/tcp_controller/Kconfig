@@ -28,5 +28,50 @@ config EXAMPLES_TCP_CONTROLLER_STACKSIZE
     help
         Stack size for the TCP Controller task.
 
+config EXAMPLES_TCP_CONTROLLER
+    bool "TCP Controller Example"
+    default n
+    help
+        Enable the TCP Controller example application.
+
+
+config EXAMPLES_TCP_CONTROLLER_PORT_NUM
+    int "TCP Port Number"
+    default 5000
+    help
+        The TCP port number to be used by the server/client.
+
+config EXAMPLES_TCP_CONTROLLER_SERVER_IP
+    string "Server IP Address"
+    default "10.0.0.2"
+    help
+        IP address of the TCP server.
+
+config EXAMPLES_TCP_CONTROLLER_CLIENT_IP
+    string "Client IP Address"
+    default "10.0.0.3"
+    help
+        IP address of the TCP client.
+
+config EXAMPLES_TCP_CONTROLLER_IFNAME
+    string "Interface Name"
+    default "wlan0"
+    help
+        The name of the network interface to use.
+
+config EXAMPLES_TCP_CONTROLLER_SSID
+    string "WiFi SSID"
+    default "MyWiFiNetwork"
+    help
+        SSID for connecting to WiFi.
+
+config EXAMPLES_TCP_CONTROLLER_PASSWORD
+    string "WiFi Password"
+    default "password123"
+    help
+        Password for connecting to WiFi.
+
+
+
 
 endif
