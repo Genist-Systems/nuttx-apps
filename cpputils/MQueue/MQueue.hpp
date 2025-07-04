@@ -14,7 +14,6 @@ struct MQueue_Settings
    long maxMsg = 8;
    long msgSize = 32;
 
-
 };
 
 

@@ -23,8 +23,10 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include "MasterController.hpp"
+#include "TCPController.hpp"
+#include "tcp_controller_main.hpp"
 #include "master_controller_main.hpp"
+#include "MQueue.hpp"
 /****************************************************************************
  * Defines
  ****************************************************************************/
@@ -44,7 +46,31 @@
 
 extern "C" int master_controller_main(int argc, FAR char *argv[])
 {
-    
+    struct MQueueSettings mq_settings =
+    {
+        .flags = O_CREAT | O_RDWR | O_NONBLOCK,
+        .mode = 0644,
+        .maxMsg = 8,
+        .msgSize = 32
+    };
+
+    struct TCPSettings tcp_settings = 
+    {
+        .port = CONFIG_EXAMPLES_TCP_CONTROLLER_PORT_NUM,
+        .server_ip = CONFIG_EXAMPLES_TCP_CONTROLLER_SERVER_IP,
+        .client_ip = CONFIG_EXAMPLES_TCP_CONTROLLER_CLIENT_IP,
+        .ifname = CONFIG_EXAMPLES_TCP_CONTROLLER_IFNAME,
+        .ssid = CONFIG_EXAMPLES_TCP_CONTROLLER_SSID,
+        .password = CONFIG_EXAMPLES_TCP_CONTROLLER_PASSWORD
+    };
+
+    TCPController controller = TCPController(CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
+                                            CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME, 
+                                            mq_settings, 
+                                            tcp_settings);
+    controller.run();
+
+
 
 
   

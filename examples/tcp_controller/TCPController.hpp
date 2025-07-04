@@ -4,14 +4,18 @@
 #include "esp32_peripherals/esp32_peripherals.hpp"
 #include "tcp_controller_main.hpp"
 
+
+
 using namespace ESP32::WiFi::TCP;
+
 
 class TCPController
 {
     public:
         TCPController(const char* mqueue_drone_to_stretcher_name, 
-                        const char* mqueue_stretcher_to_drone_name,
-                        struct MQueue_Settings& settings);
+                        const char* mqueue_stretcher_to_drone_name, 
+                        struct MQueue_Settings& mq_settings, 
+                        struct TCPSettings& tcp_settings);
 
         ~TCPController();
 
@@ -23,6 +27,8 @@ class TCPController
 
         #ifdef CONFIG_EXAMPLES_MASTER_CONTROLLER
         TCPServer _server;
+        #elif CONFIG_EXAMPLES_SLAVE_CONTROLLER
+        TCPClient _client;
         #endif
         
         

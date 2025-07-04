@@ -1,51 +1,26 @@
-/****************************************************************************
- * apps/examples/loadcell/loadcell_main.c
- *
- * SPDX-License-Identifier: Apache-2.0
- *
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.  The
- * ASF licenses this file to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance with the
- * License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
- * License for the specific language governing permissions and limitations
- * under the License.
- *
- ****************************************************************************/
+#pragma once
 
-/****************************************************************************
- * Included Files
- ****************************************************************************/
-#include "TCPController.hpp"
-#include "tcp_controller_main.hpp"
-/****************************************************************************
- * Defines
- ****************************************************************************/
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_PORT_NUM
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_PORT_NUM 5000
+#endif
 
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_SERVER_IP
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_SERVER_IP "10.0.0.2"
+#endif
 
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_CLIENT_IP
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_CLIENT_IP "10.0.0.3"
+#endif
 
-/****************************************************************************
- * Public Functions
- ****************************************************************************/
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_IFNAME
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_IFNAME "wlan0"
+#endif
 
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_SSID
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_SSID "MyWiFiNetwork"
+#endif
 
-/****************************************************************************
- * main
- ****************************************************************************/
+#ifndef CONFIG_EXAMPLES_TCP_CONTROLLER_PASSWORD
+#define CONFIG_EXAMPLES_TCP_CONTROLLER_PASSWORD "password123"
+#endif
 
-
-
-extern "C" int master_controller_main(int argc, FAR char *argv[])
-{
-    
-
-
-  
-}

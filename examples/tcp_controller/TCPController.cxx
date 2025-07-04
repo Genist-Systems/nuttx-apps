@@ -1,73 +1,58 @@
 #include "TCPController.hpp"
 
+#if !defined(CONFIG_EXAMPLES_MASTER_CONTROLLER) && !defined(CONFIG_EXAMPLES_SLAVE_CONTROLLER)
+#error "You must define either CONFIG_EXAMPLES_MASTER_CONTROLLER or CONFIG_EXAMPLES_SLAVE_CONTROLLER"
+#endif
+
+#if defined(CONFIG_EXAMPLES_MASTER_CONTROLLER) && defined(CONFIG_EXAMPLES_SLAVE_CONTROLLER)
+#error "Cannot define both CONFIG_EXAMPLES_MASTER_CONTROLLER and CONFIG_EXAMPLES_SLAVE_CONTROLLER"
+#endif
+
 TCPController::TCPController(const char* mqueue_drone_to_stretcher_name, 
                         const char* mqueue_stretcher_to_drone_name, 
-                        struct MQueue_Settings& settings, 
-                        ) :
-                        _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, settings), 
-                        _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, settings)
+                        struct MQueue_Settings& mq_settings, 
+                        struct TCPSettings& tcp_settings) :
+                        _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, mq_settings), 
+                        _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, mq_settings)
+                        #ifdef(CONFIG_EXAMPLES_MASTER_CONTROLLER)
+                        , _server(tcp_settings)
+                        #elif(CONFIG_EXAMPLES_SLAVE_CONTROLLER)
+                        , _client(tcp_settings)
+                        #endif
+
                         {
-                            
+                            #ifdef(CONFIG_EXAMPLES_MASTER_CONTROLLER)
+                                _server.acceptClient();
+                            #elif(CONFIG_EXAMPLES_SLAVE_CONTROLLER)
+                                _client.connectToServer()
+                            #endif
                         }
 
 TCPController::~TCPController() = default;
 
 void TCPController::run()
 {
-    
+
     struct StretcherToDroneData std_data{};
-
-
     struct DroneToStretcherData dts_data{};
-
 
     for (;;)
     {
         #ifdef CONFIG_EXAMPLES_MASTER_CONTROLLER
-        
-        _mq_stretcher_to_drone.send(std_data);
+            _mq_drone_to_stretcher.receive(dts_data);
+            _server.receiveMessage(std_data);
+
+            _mq_stretcher_to_drone.send(std_data);
+            _server.sendMessage(dts_data);
+        #elif defined(CONFIG_EXAMPLES_SLAVE_CONTROLLER)
+            _mq_stretcher_to_drone.receive(std_data);
+            _client.receiveMessage(dts_data);
+
+            _mq_drone_to_stretcher.send(dts_data);
+            _client.sendMessage(std_data);
         #endif
-
-
     }
 }
 
-
-
-
-// bool TCPController::_sendDroneToStretcherData(struct DroneToStretcherData* data)
-// {
-//     return _mq_drone_to_stretcher.send(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_recvStretcherToDroneData(struct StretcherToDroneData* data)
-// {
-//     return _mq_stretcher_to_drone.receive(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_sendDroneToFlightControllerData(struct DroneToFlightControllerData* data)
-// {
-//     return _mq_drone_to_flight_controller.send(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_recvFlightControllerToDroneData(struct FlightControllerToDroneData* data)
-// {
-//     return _mq_flight_controller_to_drone.receive(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_sendWinchControlData(struct WinchControlData* data)
-// {
-//     return _mq_winch.send(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_recvLoadCellData(struct LoadCellData* data)
-// {
-//     return _mq_loadcell.receiveMostRecent(data) == MqResult::Success ? true : false;
-// }
-
-// bool TCPController::_recvOpticalEncoderData(struct OpticalEncoderData* data)
-// {
-//     return _mq_opticalencoder.receiveMostRecent(data) == MqResult::Success ? true : false;
-// }
 
 
