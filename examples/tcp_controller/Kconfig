@@ -1,0 +1,31 @@
+#
+# TCP Controller Example Application Configuration
+#
+
+config EXAMPLES_TCP_CONTROLLER
+    bool "TCP Controller Example"
+    default n
+    help
+        TCP Controller example application.
+
+if EXAMPLES_TCP_CONTROLLER
+
+config EXAMPLES_TCP_CONTROLLER_PROGNAME
+    string "TCP Controller program name"
+    default "tcp_controller"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the TCP Controller.
+
+config EXAMPLES_TCP_CONTROLLER_PRIORITY
+    int "TCP Controller task priority"
+    default 100
+    help
+        Priority of the TCP Controller task if run as a background thread.
+
+config EXAMPLES_TCP_CONTROLLER_STACKSIZE
+    int "TCP Controller stack size"
+    default DEFAULT_TASK_STACKSIZE
+    help
+        Stack size for the TCP Controller task.
+
+endif

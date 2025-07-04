@@ -36,6 +36,7 @@ void MasterController::run()
 
     for (;;)
     {
+        
 
         _receiveMostRecentData(_mq_loadcell, loadcell_data);
         _receiveMostRecentData(_mq_opticalencoder, opticalencoder_data);
@@ -45,12 +46,13 @@ void MasterController::run()
 
         _calculateWinchControlData(loadcell_data, opticalencoder_data, std_data, fctd_data);
         _calculateDroneToStretcherData(loadcell_data, opticalencoder_data, std_data, fctd_data);
-        _calculateDroneToFlightControllerData(loadcell_data, opticalencoder_data, std_data, fctd_data);
+        _calculateWinchControlData(loadcell_data, opticalencoder_data, std_data, fctd_data);
 
         _sendData(_mq_winch, winch_data);
         
         _sendData(_mq_drone_to_stretcher, dts_data);
         _sendData(_mq_drone_to_flight_controller, dtfc_data);
+
 
     }
 }
