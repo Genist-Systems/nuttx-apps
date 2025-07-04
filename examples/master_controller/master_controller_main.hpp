@@ -1,2 +1,73 @@
 #pragma once
 
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_ESP_TO_STRETCHER_ESP_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_ESP_TO_STRETCHER_ESP_NAME "/mq_droneESP_to_stretcherESP"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_STRETCHER_ESP_TO_DRONE_ESP_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_STRETCHER_ESP_TO_DRONE_ESP_NAME "/mq_stretcherESP_to_stretcherESP"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_ESP_TO_FLIGHT_CONTROLLER_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_ESP_TO_FLIGHT_CONTROLLER_NAME "/mq_droneESP_to_flight_controller"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_FLIGHT_CONTROLLER_TO_DRONE_ESP_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_FLIGHT_CONTROLLER_TO_DRONE_ESP_NAME "/mq_flight_controller_to_droneESP"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME "/mq_winchcontrol"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME "/mq_loadcell"
+#endif
+
+#ifndef CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME
+#define CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME "/mq_opticalencoder"
+#endif
+
+
+enum class WinchDirection
+{
+    DOWN,
+    UP
+};
+
+struct DroneToStretcherData
+{
+
+};
+
+struct StretcherToDroneData
+{
+
+};
+
+struct DroneToFlightControllerData
+{
+
+};
+
+struct FlightControllerToDroneData
+{
+
+};
+
+struct WinchControlData
+{
+    int new_duty = 0;
+    WinchDirection direction = WinchDirection::DOWN;
+};
+
+struct LoadCellData
+{
+
+};
+
+struct OpticalEncoderData
+{
+    float length;
+    float rpm;
+};
