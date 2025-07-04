@@ -189,12 +189,18 @@ void tcp_server_test() {
     // TCP Server test
     printf("TCP Server Test\r\n");
 
-    const char* ip = "10.0.0.3";
-    const char* ifname = "wlan0";
-    const char* ssid = "MyTestAP";
-    const char* password = "12345678";
+    const TCPSettings& settings = 
+    {
+        .port = 5000,
+        .server_ip = "10.0.0.3",
+        .client_ip = nullptr,
+        .ifname = "wlan0",
+        .ssid = "MyTestAP",
+        .password = "12345678"
+    }
 
-    TCPServer server(5000, ip, ifname, ssid, password);
+
+    TCPServer server(settings);
 
     if (!server.init()) {
         printf("Server init failed\n");
@@ -231,13 +237,17 @@ void tcp_client_test()
 {
     printf("TCP Client Test\r\n");
     
-    const char* server_ip = "10.0.0.3";
-    const char* client_ip = "10.0.0.4";
-    const char* ifname = "wlan0";
-    const char* ssid = "MyTestAP";
-    const char* password = "12345678";
+    const TCPSettings& settings = 
+    {
+        .port = 5000,
+        .server_ip = "10.0.0.3",
+        .client_ip = "10.0.0.4",
+        .ifname = "wlan0",
+        .ssid = "MyTestAP",
+        .password = "12345678"
+    }
 
-    TCPClient client(5000, server_ip, client_ip, ifname, ssid, password);
+    TCPClient client(settings);
 
     if (!client.connectToServer())
     {
