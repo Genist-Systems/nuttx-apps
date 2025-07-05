@@ -25,6 +25,10 @@
  ****************************************************************************/
 #include "MasterController.hpp"
 #include "master_controller_main.hpp"
+
+extern "C" {
+    #include <nuttx/config.h>
+}
 /****************************************************************************
  * Defines
  ****************************************************************************/
@@ -41,11 +45,28 @@
  ****************************************************************************/
 
 
-
 extern "C" int master_controller_main(int argc, FAR char *argv[])
 {
     
+    struct MQueue_Settings settings =
+    {
+        .flags = O_CREAT | O_RDWR | O_NONBLOCK,
+        .mode = 0644,
+        .maxMsg = CONFIG_PREALLOC_MQ_MSGS,
+        .msgSize = CONFIG_MQ_MAXMSGSIZE
+    };
+    
+    MasterController controller = MasterController(CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
+                                                    CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME, 
+                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_TO_FLIGHT_CONTROLLER_NAME, 
+                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_FLIGHT_CONTROLLER_TO_DRONE_NAME,
+                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME, 
+                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME, 
+                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME, 
+                                                    settings);
 
+    controller.run();
 
+    return 0;
   
 }

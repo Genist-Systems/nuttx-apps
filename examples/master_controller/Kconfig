@@ -2,27 +2,27 @@
 # Master Controller Example Application Configuration
 #
 
-config EXAMPLES_MASTER_CONTROLLER
+config EXAMPLES_MASTERCONTROLLER
     bool "Master Controller Example"
     default n
     help
         Master Controller example application.
 
-if EXAMPLES_MASTER_CONTROLLER
+if EXAMPLES_MASTERCONTROLLER
 
-config EXAMPLES_MASTER_CONTROLLER_PROGNAME
+config EXAMPLES_MASTERCONTROLLER_PROGNAME
     string "Master Controller program name"
     default "master_controller"
     help
         This is the name of the NSH command or ELF binary that will be installed and used to run the Master Controller.
 
-config EXAMPLES_MASTER_CONTROLLER_PRIORITY
+config EXAMPLES_MASTERCONTROLLER_PRIORITY
     int "Master Controller task priority"
     default 100
     help
         Priority of the Master Controller task if run as a background thread.
 
-config EXAMPLES_MASTER_CONTROLLER_STACKSIZE
+config EXAMPLES_MASTERCONTROLLER_STACKSIZE
     int "Master Controller stack size"
     default DEFAULT_TASK_STACKSIZE
     help
@@ -31,3 +31,61 @@ config EXAMPLES_MASTER_CONTROLLER_STACKSIZE
 endif
 
 
+
+if EXAMPLES_MASTERCONTROLLER || EXAMPLES_SLAVECONTROLLER
+
+menu "Master and Slave Controller Message Queue Configuration"
+
+config EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME
+    string "MQ Name: Drone to Stretcher"
+    default "/mq_drone_to_stretcher"
+    help
+        Message queue name for data from drone to stretcher.
+
+config EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME
+    string "MQ Name: Stretcher to Drone"
+    default "/mq_stretcher_to_drone"
+    help
+        Message queue name for data from stretcher to drone.
+
+endmenu # Message Queue Configuration
+
+endif
+
+if EXAMPLES_MASTERCONTROLLER
+
+menu "Master Controller Message Queue Configuration"
+
+config EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_TO_FLIGHT_CONTROLLER_NAME
+    string "MQ Name: Drone to Flight Controller"
+    default "/mq_drone_to_flight_controller"
+    help
+        Message queue name for data from drone to flight controller.
+
+config EXAMPLES_MASTER_CONTROLLER_MQUEUE_FLIGHT_CONTROLLER_TO_DRONE_NAME
+    string "MQ Name: Flight Controller to Drone"
+    default "/mq_flight_controller_to_drone"
+    help
+        Message queue name for data from flight controller to drone.
+
+config EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME
+    string "MQ Name: Winch Control"
+    default "/mq_winchcontrol"
+    help
+        Message queue name for winch control commands.
+
+config EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME
+    string "MQ Name: Load Cell"
+    default "/mq_loadcell"
+    help
+        Message queue name for load cell data.
+
+config EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME
+    string "MQ Name: Optical Encoder"
+    default "/mq_opticalencoder"
+    help
+        Message queue name for optical encoder data.
+
+endmenu
+
+endif 

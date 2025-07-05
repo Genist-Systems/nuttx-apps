@@ -1,5 +1,5 @@
 ############################################################################
-# apps/examples/MASTERCONTROLLER/Makefile
+# apps/examples/MASTER_CONTROLLER/Makefile
 #
 # SPDX-License-Identifier: Apache-2.0
 #
@@ -31,8 +31,7 @@ MODULE    = $(CONFIG_EXAMPLES_MASTERCONTROLLER)
 # Source files
 CSRCS =
 CXXSRCS = master_controller_main.cxx \
-            MasterController.cxx \
-          $(APPDIR)/cpputils/MQueue/MQueue.cxx
+            MasterController.cxx 
 
 
 

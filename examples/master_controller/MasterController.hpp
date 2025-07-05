@@ -3,6 +3,8 @@
 #include "MQueue.hpp"
 #include "master_controller_main.hpp"
 
+#include <nuttx/clock.h>
+
 class MasterController
 {
     public:
@@ -19,32 +21,32 @@ class MasterController
 
         void run();
     private:
-        MQueue _mq_drone_to_stretcher, 
-        _mq_stretcher_to_drone, 
-        _mq_drone_to_flight_controller, 
-        _mq_flight_controller_to_drone, 
-        _mq_winch, 
-        _mq_loadcell, 
-        _mq_opticalencoder;
-        
-        
+        MQueue<DroneToStretcherData> _mq_drone_to_stretcher;
+        MQueue<StretcherToDroneData> _mq_stretcher_to_drone;
+        MQueue<DroneToFlightControllerData> _mq_drone_to_flight_controller;
+        MQueue<FlightControllerToDroneData> _mq_flight_controller_to_drone;
+        MQueue<WinchControlData> _mq_winch;
+        MQueue<LoadCellData> _mq_loadcell;
+        MQueue<OpticalEncoderData> _mq_opticalencoder;
+   
+
         template <typename T>
-        bool _sendData(const MQueue& mq, const T& data)
+        bool _sendData(const MQueue<T>& mq, const T& data)
         {
             return mq.send(data) == MqResult::Success;
         }
 
         template <typename T>
-        bool _receiveData(const MQueue& mq, T& data)
+        bool _receiveData(const MQueue<T>& mq, T& data)
         {
             return mq.receive(data) == MqResult::Success;
         }
 
         template <typename T>
-        bool _receiveMostRecentData(const MQueue& mq, T& data)
+        bool _receiveMostRecentData(const MQueue<T>& mq, T& data)
         {
             return mq.receiveMostRecent(data) == MqResult::Success;
-        }   
+        } 
 
         bool _calculateWinchControlData(struct LoadCellData& loadcell_data, struct OpticalEncoderData& opticalencoder_data, struct StretcherToDroneData& std_data, struct FlightControllerToDroneData& fctd_data);
         bool _calculateDroneToStretcherData(struct LoadCellData& loadcell_data, struct OpticalEncoderData& opticalencoder_data, struct StretcherToDroneData& std_data, struct FlightControllerToDroneData& fctd_data);
