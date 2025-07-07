@@ -189,7 +189,7 @@ void tcp_server_test() {
     // TCP Server test
     printf("TCP Server Test\r\n");
 
-    const TCPSettings& settings = 
+    const TCP_Settings& settings = 
     {
         .port = 5000,
         .server_ip = "10.0.0.3",
@@ -237,7 +237,7 @@ void tcp_client_test()
 {
     printf("TCP Client Test\r\n");
     
-    const TCPSettings& settings = 
+    const TCP_Settings& settings = 
     {
         .port = 5000,
         .server_ip = "10.0.0.3",

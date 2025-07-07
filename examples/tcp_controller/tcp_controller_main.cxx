@@ -46,7 +46,7 @@
 
 extern "C" int master_controller_main(int argc, FAR char *argv[])
 {
-    struct MQueueSettings mq_settings =
+    struct MQueue_Settings mq_settings =
     {
         .flags = O_CREAT | O_RDWR | O_NONBLOCK,
         .mode = 0644,
@@ -54,23 +54,23 @@ extern "C" int master_controller_main(int argc, FAR char *argv[])
         .msgSize = 32
     };
 
-    struct TCPSettings tcp_settings = 
+    struct TCP_Settings tcp_settings = 
     {
-        .port = CONFIG_EXAMPLES_TCP_CONTROLLER_PORT_NUM,
-        .server_ip = CONFIG_EXAMPLES_TCP_CONTROLLER_SERVER_IP,
-        .client_ip = CONFIG_EXAMPLES_TCP_CONTROLLER_CLIENT_IP,
-        .ifname = CONFIG_EXAMPLES_TCP_CONTROLLER_IFNAME,
-        .ssid = CONFIG_EXAMPLES_TCP_CONTROLLER_SSID,
-        .password = CONFIG_EXAMPLES_TCP_CONTROLLER_PASSWORD
+        .port = CONFIG_EXAMPLES_TCPCONTROLLER_PORT_NUM,
+        .server_ip = CONFIG_EXAMPLES_TCPCONTROLLER_SERVER_IP,
+        .client_ip = CONFIG_EXAMPLES_TCPCONTROLLER_CLIENT_IP,
+        .ifname = CONFIG_EXAMPLES_TCPCONTROLLER_IFNAME,
+        .ssid = CONFIG_EXAMPLES_TCPCONTROLLER_SSID,
+        .password = CONFIG_EXAMPLES_TCPCONTROLLER_PASSWORD
     };
 
-    TCPController controller = TCPController(CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
-                                            CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME, 
+    TCPController controller = TCPController(CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
+                                            CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME, 
                                             mq_settings, 
                                             tcp_settings);
     controller.run();
 
-
+    return 0;
 
 
   

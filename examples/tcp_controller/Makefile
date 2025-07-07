@@ -32,12 +32,12 @@ MODULE    = $(CONFIG_EXAMPLES_TCPCONTROLLER)
 CSRCS =
 CXXSRCS = tcp_controller_main.cxx \
             TCPController.cxx \
-            $(TOPDIR)/drivers/esp32_peripherals/esp32_tcp.cxx \
-          $(APPDIR)/cpputils/MQueue/MQueue.cxx
+            $(TOPDIR)/drivers/esp32_peripherals/esp32_tcp.cxx
 
 
 
 CXXFLAGS += -I$(APPDIR)/cpputils/MQueue
+CXXFLAGS += -I$(APPDIR)/examples/master_controller
 
 
 include $(APPDIR)/Application.mk
