@@ -1,0 +1,53 @@
+#
+# Slave Controller Example Application Configuration
+#
+
+config EXAMPLES_SLAVECONTROLLER
+    bool "Slave Controller Example"
+    default n
+    help
+        Slave Controller example application.
+
+if EXAMPLES_SLAVECONTROLLER
+
+config EXAMPLES_SLAVECONTROLLER_PROGNAME
+    string "Slave Controller program name"
+    default "slave_controller"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the Slave Controller.
+
+config EXAMPLES_SLAVECONTROLLER_PRIORITY
+    int "Slave Controller task priority"
+    default 100
+    help
+        Priority of the Slave Controller task if run as a background thread.
+
+config EXAMPLES_SLAVECONTROLLER_STACKSIZE
+    int "Slave Controller stack size"
+    default DEFAULT_TASK_STACKSIZE
+    help
+        Stack size for the Slave Controller task.
+
+menu "Slave Controller Message Queue Configuration"
+
+config EXAMPLES_SLAVE_CONTROLLER_MQUEUE_IMU_NAME
+    string "MQ Name: IMU"
+    default "/mq_imu"
+    help
+        Message queue name for IMU data.
+
+config EXAMPLES_SLAVE_CONTROLLER_MQUEUE_PROXIMITY_SENSOR_NAME
+    string "MQ Name: Proximity Sensor"
+    default "/mq_proximity"
+    help
+        Message queue name for proximity sensor data.
+
+config EXAMPLES_SLAVE_CONTROLLER_MQUEUE_TEMPERATURE_SENSOR_NAME
+    string "MQ Name: Temperature Sensor"
+    default "/mq_temperature"
+    help
+        Message queue name for temperature sensor data.
+
+endmenu
+
+endif # EXAMPLES_SLAVECONTROLLER

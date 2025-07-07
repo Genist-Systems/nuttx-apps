@@ -7,7 +7,7 @@ MasterController::MasterController(const char* mqueue_drone_to_stretcher_name,
                         const char* mqueue_winchcontrol_name, 
                         const char* mqueue_loadcell_name, 
                         const char* mqueue_opticalencoder_name, 
-                        struct MQueue_Settings& settings) :
+                        const struct MQueue_Settings& settings) :
                         _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, settings), 
                         _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, settings),
                         _mq_drone_to_flight_controller(mqueue_drone_to_flight_controller_name, settings), 
@@ -44,9 +44,9 @@ void MasterController::run()
         _receiveData(_mq_stretcher_to_drone, std_data);
         _receiveData(_mq_flight_controller_to_drone, fctd_data); 
 
-        _calculateWinchControlData(loadcell_data, opticalencoder_data, std_data, fctd_data);
-        _calculateDroneToStretcherData(loadcell_data, opticalencoder_data, std_data, fctd_data);
-        _calculateWinchControlData(loadcell_data, opticalencoder_data, std_data, fctd_data);
+        _calculateWinchControlData(loadcell_data, opticalencoder_data, std_data, fctd_data, winch_data);
+        _calculateDroneToStretcherData(loadcell_data, opticalencoder_data, std_data, fctd_data, dts_data);
+        _calculateDroneToFlightControllerData(loadcell_data, opticalencoder_data, std_data, fctd_data, dtfc_data);
 
         _sendData(_mq_winch, winch_data);
         
@@ -57,17 +57,29 @@ void MasterController::run()
     }
 }
 
-bool MasterController::_calculateWinchControlData(struct LoadCellData& loadcell_data, struct OpticalEncoderData& opticalencoder_data, struct StretcherToDroneData& std_data, struct FlightControllerToDroneData& fctd_data)
+bool MasterController::_calculateWinchControlData(const struct LoadCellData& loadcell_data, 
+                                                const struct OpticalEncoderData& opticalencoder_data, 
+                                                const struct StretcherToDroneData& std_data, 
+                                                const struct FlightControllerToDroneData& fctd_data, 
+                                                struct WinchControlData& winch_data)
 {
     return true;
 }
 
-bool MasterController::_calculateDroneToStretcherData(struct LoadCellData& loadcell_data, struct OpticalEncoderData& opticalencoder_data, struct StretcherToDroneData& std_data, struct FlightControllerToDroneData& fctd_data)
+bool MasterController::_calculateDroneToStretcherData(const struct LoadCellData& loadcell_data, 
+                                                    const struct OpticalEncoderData& opticalencoder_data, 
+                                                    const struct StretcherToDroneData& std_data, 
+                                                    const struct FlightControllerToDroneData& fctd_data, 
+                                                    struct DroneToStretcherData dts_data)
 {
     return true;
 }
 
-bool MasterController::_calculateDroneToFlightControllerData(struct LoadCellData& loadcell_data, struct OpticalEncoderData& opticalencoder_data, struct StretcherToDroneData& std_data, struct FlightControllerToDroneData& fctd_data)
+bool MasterController::_calculateDroneToFlightControllerData(const struct LoadCellData& loadcell_data, 
+                                                            const struct OpticalEncoderData& opticalencoder_data, 
+                                                            const struct StretcherToDroneData& std_data, 
+                                                            const struct FlightControllerToDroneData& fctd_data, 
+                                                            struct DroneToFlightControllerData& dtfc_data)
 {
     return true;
 }

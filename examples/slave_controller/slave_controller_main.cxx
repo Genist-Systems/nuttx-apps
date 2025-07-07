@@ -23,7 +23,7 @@
 /****************************************************************************
  * Included Files
  ****************************************************************************/
-#include "MasterController.hpp"
+#include "SlaveController.hpp"
 #include "master_controller_main.hpp"
 
 extern "C" {
@@ -45,9 +45,9 @@ extern "C" {
  ****************************************************************************/
 
 
-extern "C" int master_controller_main(int argc, FAR char *argv[])
+
+extern "C" int slave_controller_main(int argc, FAR char *argv[])
 {
-    
     const struct MQueue_Settings settings =
     {
         .flags = O_CREAT | O_RDWR | O_NONBLOCK,
@@ -56,13 +56,11 @@ extern "C" int master_controller_main(int argc, FAR char *argv[])
         .msgSize = CONFIG_MQ_MAXMSGSIZE
     };
     
-    MasterController controller = MasterController(CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
+    SlaveController controller = SlaveController(CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_DRONE_TO_STRETCHER_NAME, 
                                                     CONFIG_EXAMPLES_MASTER_AND_SLAVE_CONTROLLER_MQUEUE_STRETCHER_TO_DRONE_NAME, 
-                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_DRONE_TO_FLIGHT_CONTROLLER_NAME, 
-                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_FLIGHT_CONTROLLER_TO_DRONE_NAME,
-                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME, 
-                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME, 
-                                                    CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME, 
+                                                    CONFIG_EXAMPLES_SLAVE_CONTROLLER_MQUEUE_IMU_NAME, 
+                                                    CONFIG_EXAMPLES_SLAVE_CONTROLLER_MQUEUE_PROXIMITY_SENSOR_NAME, 
+                                                    CONFIG_EXAMPLES_SLAVE_CONTROLLER_MQUEUE_TEMPERATURE_SENSOR_NAME,
                                                     settings);
 
     controller.run();
