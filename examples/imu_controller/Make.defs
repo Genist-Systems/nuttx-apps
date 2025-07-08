@@ -20,6 +20,6 @@
 #
 ############################################################################/
 
-ifneq ($(CONFIG_EXAMPLES_LOADCELL),)
-CONFIGURED_APPS += $(APPDIR)/examples/loadcell
+ifneq ($(CONFIG_EXAMPLES_IMU),)
+CONFIGURED_APPS += $(APPDIR)/examples/imu_controller
 endif
