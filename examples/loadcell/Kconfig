@@ -10,43 +10,6 @@ config EXAMPLES_LOADCELL
 
 if EXAMPLES_LOADCELL
 
-config EXAMPLES_LOADCELL_NUM_CHANNELS
-    int "Number of Load Cell Channels"
-    default 2
-    help
-      Sets how many load cells are connected.
-
-config EXAMPLES_LOADCELL_RATED_KG
-    int "Rated capacity of load cell (kg)"
-    default 100
-    help
-      Maximum rated weight of each load cell.
-
-config EXAMPLES_I2C_FD
-    string "I2C device file"
-    default "/dev/i2c0"
-    help
-      Path to the I2C device used to communicate with NAU7802.
-
-config EXAMPLES_MUX_SELECT_PIN_BIT_0
-    string "GPIO pin path for mux select bit 0"
-    default "/dev/gpio0"
-    help
-      GPIO file path used for multiplexer select line 0.
-
-config EXAMPLES_MUX_SELECT_PIN_BIT_1
-    string "GPIO pin path for mux select bit 1"
-    default "/dev/gpio1"
-    help
-      GPIO file path used for multiplexer select line 1.
-
-config EXAMPLES_MUX_SELECT_PIN_BIT_2
-    string "GPIO pin path for mux select bit 2"
-    default "/dev/gpio2"
-    help
-      GPIO file path used for multiplexer select line 2.
-
-
 config EXAMPLES_LOADCELL_PROGNAME
     string "Load Cell program name"
     default "loadcell"
@@ -65,6 +28,45 @@ config EXAMPLES_LOADCELL_STACKSIZE
 	default DEFAULT_TASK_STACKSIZE
 	---help---
 		Stack size for the Load Cell measurement task.
+
+menu "Loadcell Controller Configuration"
+
+config EXAMPLES_LOADCELL_NUM_CHANNELS
+    int "Number of Load Cell Channels"
+    default 2
+    help
+      Sets how many load cells are connected.
+
+config EXAMPLES_LOADCELL_RATED_KG
+    int "Rated capacity of load cell (kg)"
+    default 100
+    help
+      Maximum rated weight of each load cell.
+
+config EXAMPLES_LOADCELL_I2C_FD
+    string "I2C device file"
+    default "/dev/i2c0"
+    help
+      Path to the I2C device used to communicate with NAU7802.
+
+config EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_0
+    string "GPIO pin path for mux select bit 0"
+    default "/dev/gpio0"
+    help
+      GPIO file path used for multiplexer select line 0.
+
+config EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_1
+    string "GPIO pin path for mux select bit 1"
+    default "/dev/gpio1"
+    help
+      GPIO file path used for multiplexer select line 1.
+
+config EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_2
+    string "GPIO pin path for mux select bit 2"
+    default "/dev/gpio2"
+    help
+      GPIO file path used for multiplexer select line 2.
+endmenu
 
 endif
 

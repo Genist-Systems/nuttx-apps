@@ -47,24 +47,7 @@
 
 extern "C" int loadcell_main(int argc, FAR char *argv[])
 {
-    
-    
-  
-    // MQueue mq("/mqtest", O_CREAT | O_RDWR | O_NONBLOCK, 0644, 8, sizeof(MyMessage));
-
-
-    // int id = 0;
-    // while (1) {
-    //     MyMessage msg = {id++, id * 1.5f};
-    //     MqResult res = mq.send(msg);
-
-    //     printf("[Sender] Sent id=%d, value=%.2f => result=%d\n", msg.id, msg.value, static_cast<int>(res));
-    //     sleep(1);
-    // }
-
-    // return 0;
-
-    
+ 
     struct NAU7802Config load_cell_config
     {
         .enable = true,
@@ -84,13 +67,13 @@ extern "C" int loadcell_main(int argc, FAR char *argv[])
 
     struct TCA9548APins i2c_mux_pins
     {
-        .sel2 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_2,
-        .sel1 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_1,
-        .sel0 = CONFIG_EXAMPLES_MUX_SELECT_PIN_BIT_0
+        .sel2 = CONFIG_EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_2,
+        .sel1 = CONFIG_EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_1,
+        .sel0 = CONFIG_EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_0
     };
 
     LoadCellController controller = LoadCellController(&load_cell_config, 
-                        CONFIG_EXAMPLES_I2C_FD, 
+                        CONFIG_EXAMPLES_LOADCELL_I2C_FD, 
                         &i2c_config,
                         &i2c_mux_pins, 
                         CONFIG_EXAMPLES_LOADCELL_RATED_KG);
