@@ -16,7 +16,7 @@ CXXSRCS = test_main.cxx \
 		$(TOPDIR)/drivers/esp32_peripherals/esp32_pwm.cxx \
 		$(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
 		$(TOPDIR)/drivers/esp32_peripherals/esp32_spi.cxx \
-        $(TOPDIR)/drivers/esp32_peripherals/esp32_tcp.cxx \
+        $(TOPDIR)/drivers/esp32_peripherals/esp32_tcp.cxx
 
 # Include paths
 CFLAGS +=

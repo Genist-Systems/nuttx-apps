@@ -197,7 +197,7 @@ void tcp_server_test() {
         .ifname = "wlan0",
         .ssid = "MyTestAP",
         .password = "12345678"
-    }
+    };
 
 
     TCPServer server(settings);
@@ -245,7 +245,7 @@ void tcp_client_test()
         .ifname = "wlan0",
         .ssid = "MyTestAP",
         .password = "12345678"
-    }
+    };
 
     TCPClient client(settings);
 
@@ -281,9 +281,9 @@ extern "C" int test_main(int argc, char *argv[]) {
     // Uncomment the desired function to test
     // gpio_test();
     // pwm_test();
-    // i2c_test();
+    i2c_test();
     // spi_test();
-    tcp_server_test();
+    // tcp_server_test();
     // tcp_client_test();
 
     return 0;
