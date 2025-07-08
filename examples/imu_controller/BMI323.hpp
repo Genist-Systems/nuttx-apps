@@ -4,6 +4,14 @@
 
 using namespace ESP32::I2C;
 
+struct BMI323_Config {
+    uint8_t mode = 0x7; 
+    uint8_t average = 0x0; 
+    uint8_t bw = 0x1;
+    uint8_t range = 0x0; 
+    uint8_t odr = 0xB; 
+};
+
 class BMI323 {
 public:
     BMI323(const char* devPath, struct i2c_config_s* config,

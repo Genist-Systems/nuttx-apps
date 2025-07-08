@@ -35,7 +35,7 @@ class LoadCellController {
 
         ~LoadCellController();
 
-        bool begin();
+        bool init();
         void run();
 
     private:

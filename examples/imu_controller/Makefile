@@ -39,6 +39,7 @@ CXXSRCS = BMI323.cxx \
 
 
 CXXFLAGS += -I$(APPDIR)/cpputils/MQueue
+CXXFLAGS += -I$(APPDIR)/examples/slave_controller
 
 
 include $(APPDIR)/Application.mk

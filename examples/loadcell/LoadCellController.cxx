@@ -18,7 +18,7 @@ LoadCellController::LoadCellController(struct NAU7802Config* load_cell_config,
 LoadCellController::~LoadCellController() {}
 
 
-bool LoadCellController::begin()
+bool LoadCellController::init()
 {
     bool noError = true;
 
