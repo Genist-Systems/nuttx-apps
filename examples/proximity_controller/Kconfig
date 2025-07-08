@@ -1,0 +1,39 @@
+#
+# Proximity Sensor Example Application Configuration
+#
+
+config EXAMPLES_PROXIMITYSENSOR
+    bool "Proximity Sensor Example"
+    default n
+    help
+        Proximity Sensor example application.
+
+if EXAMPLES_PROXIMITYSENSOR
+
+config EXAMPLES_PROXIMITYSENSOR_PROGNAME
+    string "Proximity Sensor program name"
+    default "proximity_sensor"
+    help
+        This is the name of the NSH command or ELF binary that will be installed and used to run the Proximity Sensor application.
+
+config EXAMPLES_PROXIMITYSENSOR_PRIORITY
+    int "Proximity Sensor task priority"
+    default 100
+    help
+        Priority of the Proximity Sensor task if run as a background thread.
+
+config EXAMPLES_PROXIMITYSENSOR_STACKSIZE
+    int "Proximity Sensor stack size"
+    default DEFAULT_TASK_STACKSIZE
+    help
+        Stack size for the Proximity Sensor task.
+
+menu "Proximity Sensor Config"
+    config EXAMPLES_I2C_FD
+    string "I2C device file"
+    default "/dev/i2c0"
+    help
+        Path to the I2C device used to communicate with the Proximity Sensor.
+endmenu
+
+endif
