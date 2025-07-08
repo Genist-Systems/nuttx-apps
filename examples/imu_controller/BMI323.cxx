@@ -7,23 +7,14 @@
 #define ACC_CONF  0x20
 #define GYR_CONF  0x21
 #define CMD       0x7E
-
-struct BMI323_Config {
-    uint8_t mode = 0x7;       // e.g., 0x7000
-    uint8_t average = 0x0;    // e.g., 0x0000
-    uint8_t bw = 0x0;  // e.g., 0x0080
-    uint8_t range = 0x0;      // e.g., 0x0000
-    uint8_t odr = 0xB;        // e.g., 0x000B
-};
-
-
+#define DEVICE_ID_REG 0x00
+#define DEVICE_ID 0x32
 
 BMI323::BMI323(const char* devPath, struct i2c_config_s* config,
                const BMI323_Config& accelCfg, const BMI323_Config& gyroCfg)
     : _devPath(devPath), _config(config), _accelCfg(accelCfg), _gyroCfg(gyroCfg)
 {
     _i2c = I2C_Master();
-    _i2c.setup(_devPath, _config);
 }
 
 bool BMI323::init()
@@ -33,12 +24,25 @@ bool BMI323::init()
         return false;
     }
 
+    uint8_t buffer[2];
+    if (!_i2c.readRegister(DEVICE_ID_REG, buffer, sizeof(buffer)))
+    {
+        printf("Failed to read BMI device ID\n");
+        return false;
+    }
+
+    if (buffer[1] != DEVICE_ID)
+    {
+        printf("BMI incorrect device ID");
+        return false;
+    }
+
     softReset();
 
 
-    if (!_writeRegister16(ACC_CONF, _getAccelConfigRegister())) return false;
+    if (!_i2c.writeRegister16(ACC_CONF, _getAccelConfigRegister())) return false;
 
-    if (!_writeRegister16(GYR_CONF, _getGyroConfigRegister())) return false;
+    if (!_i2c.writeRegister16(GYR_CONF, _getGyroConfigRegister())) return false;
 
     return true;
 }
@@ -55,7 +59,7 @@ uint16_t BMI323::_getAccelConfigRegister()
     if (_accelCfg.average <= 0x6)
         acc_conf |= _accelCfg.average << 8;
     
-    if (_accelCfg.bw >= 0x1)
+    if (_accelCfg.bw == 0x1)
         acc_conf |= _accelCfg.bw << 7;
 
     if (_accelCfg.range <= 0x3)
@@ -106,7 +110,7 @@ uint16_t BMI323::_getGyroConfigRegister()
     if (_gyroCfg.average <= 0x6)
         gyro_conf |= _gyroCfg.average << 8;
     
-    if (_gyroCfg.bw >= 0x1)
+    if (_gyroCfg.bw == 0x1)
         gyro_conf |= _gyroCfg.bw << 7;
 
     if (_gyroCfg.range <= 0x4)
@@ -150,38 +154,23 @@ uint16_t BMI323::_getGyroConfigRegister()
 
 void BMI323::softReset()
 {
-    _writeRegister16(CMD, 0xDEAF);
+    _i2c.writeRegister16(CMD, 0xDEAF);
     usleep(50000);
-}
-
-bool BMI323::_writeRegister16(uint8_t reg, uint16_t value)
-{
-    uint8_t payload[3] = { reg, static_cast<uint8_t>(value & 0xFF), static_cast<uint8_t>((value >> 8) & 0xFF) };
-    return _i2c.write(payload, sizeof(payload));
-}
-
-uint16_t BMI323::_readRegister16(uint8_t reg)
-{
-    uint8_t buffer[4] = {};
-    if (!_i2c.read(reg, buffer, sizeof(buffer)))
-        return 0xFFFF;
-    return (buffer[3]   | buffer[2] << 8);
 }
 
 bool BMI323::readAccelAndGyro()
 {
     uint8_t buffer[14] = {};
-    if (!_i2c.read(0x03, buffer, sizeof(buffer)))
+    if (!_i2c.readRegister(0x03, buffer, sizeof(buffer)))
         return false;
 
-    int offset = 2;
-    _x = buffer[offset + 0] | (buffer[offset + 1] << 8);
-    _y = buffer[offset + 2] | (buffer[offset + 3] << 8);
-    _z = buffer[offset + 4] | (buffer[offset + 5] << 8);
+    _x = buffer[0] | (buffer[1] << 8);
+    _y = buffer[2] | (buffer[3] << 8);
+    _z = buffer[4] | (buffer[5] << 8);
 
-    _gx = buffer[offset + 6] | (buffer[offset + 7] << 8);
-    _gy = buffer[offset + 8] | (buffer[offset + 9] << 8);
-    _gz = buffer[offset + 10] | (buffer[offset + 11] << 8);
+    _gx = buffer[6] | (buffer[7] << 8);
+    _gy = buffer[8] | (buffer[9] << 8);
+    _gz = buffer[10] | (buffer[11] << 8);
 
     _accelX_m_s2 = _lsbToM2S(_x);
     _accelY_m_s2 = _lsbToM2S(_y);
