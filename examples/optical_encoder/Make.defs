@@ -20,6 +20,6 @@
 #
 ############################################################################/
 
-ifneq ($(CONFIG_EXAMPLES_OPTICAL_ENCODER),)
+ifneq ($(CONFIG_EXAMPLES_OPTICALENCODER),)
 CONFIGURED_APPS += $(APPDIR)/examples/optical_encoder
 endif

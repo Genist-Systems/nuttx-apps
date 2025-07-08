@@ -44,28 +44,13 @@
 extern "C" int optical_encoder_main(int argc, FAR char *argv[])
 {
 
-    // MQueue mq("/mqtest", O_CREAT | O_RDWR | O_NONBLOCK, 0644, 8, sizeof(MyMessage));
-
-
-    // while (1) {
-    //     MyMessage msg{};
-    //     MqResult res = mq.receiveMostRecent(msg);
-
-    //     if (res == MqResult::Success) {
-    //         printf("[Receiver] Got id=%d, value=%.2f\n", msg.id, msg.value);
-    //     } else {
-    //         printf("[Receiver] No message or error: %d\n", static_cast<int>(res));
-    //     }
-
-    //     sleep(1);
-    // }
     
-    OpticalEncoderController controller = OpticalEncoderController(CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOA, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOB, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_PPR,
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_SIGNO, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_INITIAL_LENGTH_METERS, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_AVERAGE_DRUM_RADIUS_CM);
+    OpticalEncoderController controller = OpticalEncoderController(CONFIG_EXAMPLES_OPTICALENCODER_GPIOA, 
+                                                                    CONFIG_EXAMPLES_OPTICALENCODER_GPIOB, 
+                                                                    CONFIG_EXAMPLES_OPTICALENCODER_PPR,
+                                                                    CONFIG_EXAMPLES_OPTICALENCODER_SIGNO, 
+                                                                    CONFIG_EXAMPLES_OPTICALENCODER_INITIAL_LENGTH_METERS, 
+                                                                    CONFIG_EXAMPLES_OPTICALENCODER_AVERAGE_DRUM_RADIUS_CM);
 
 
     controller.init();
