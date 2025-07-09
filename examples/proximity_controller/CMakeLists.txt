@@ -21,12 +21,12 @@
 # ##############################################################################
 
 
-if(CONFIG_EXAMPLES_OPTICAL_ENCODER)
+if(CONFIG_EXAMPLES_PROXIMITYSENSOR)
   nuttx_add_application(
     NAME
     ${CONFIG_EXAMPLES_OPTICAL_ENCODER_PROGNAME}
     SRCS
-    optical_encoder_main.cxx
+    proximity_sensor_controller_main.cxx
     STACKSIZE
     ${CONFIG_EXAMPLES_OPTICAL_ENCODER_STACKSIZE}
     PRIORITY
