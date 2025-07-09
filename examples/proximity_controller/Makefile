@@ -32,9 +32,11 @@ MODULE    = $(CONFIG_EXAMPLES_PROXIMITYSENSOR)
 CSRCS =
 CXXSRCS = proximity_sensor_controller_main.cxx \
 		ProximitySensorController.cxx \
-		VL53L4ED.cxx \
+		VL53L4ED/VL53L4ED.cxx \
+		VL53L4ED/VL53L4ED_calibration.cxx \
+		VL53L4ED/platform.cxx \
 		$(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
-		$(APPDIR)/cpputils/MQueue/MQueue.cxx
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx 
 
 
 

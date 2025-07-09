@@ -1,9 +1,16 @@
 #pragma once
 
-#include "esp32_peripherals/esp32_peripherals.hpp"
-#include <stdint.h>
+// #include "VL53L4ED.hpp"
 
-using namespace ESP32::GPIO;
+class ProximitySensorController
+{
+    public:
+        ProximitySensorController();
+        ~ProximitySensorController();
+    private:
+        // VL53L4ED _prox_sensor;
+};
+
 
 
 

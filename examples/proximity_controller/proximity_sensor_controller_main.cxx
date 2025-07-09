@@ -24,10 +24,7 @@
  * Included Files
  ****************************************************************************/
 
-#include "optical_encoder_main.hpp"
-#include "OpticalEncoderController.hpp"
-#include "MQueue.hpp"
-#include "loadcell_main.hpp"
+#include "VL53L4ED/VL53L4ED.hpp"
 
 /****************************************************************************
  * Defines
@@ -41,36 +38,24 @@
  * main
  ****************************************************************************/
 
-extern "C" int optical_encoder_main(int argc, FAR char *argv[])
+extern "C" int proximity_sensor_main(int argc, FAR char *argv[])
 {
-
-    // MQueue mq("/mqtest", O_CREAT | O_RDWR | O_NONBLOCK, 0644, 8, sizeof(MyMessage));
-
-
-    // while (1) {
-    //     MyMessage msg{};
-    //     MqResult res = mq.receiveMostRecent(msg);
-
-    //     if (res == MqResult::Success) {
-    //         printf("[Receiver] Got id=%d, value=%.2f\n", msg.id, msg.value);
-    //     } else {
-    //         printf("[Receiver] No message or error: %d\n", static_cast<int>(res));
-    //     }
-
-    //     sleep(1);
-    // }
+    struct i2c_config_s i2c_config = 
+    {
+        .frequency = 400000,
+        .address = 0x52, 
+        .addrlen = 7
+    };
     
-    OpticalEncoderController controller = OpticalEncoderController(CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOA, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_GPIOB, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_PPR,
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_SIGNO, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_INITIAL_LENGTH_METERS, 
-                                                                    CONFIG_EXAMPLES_OPTICAL_ENCODER_AVERAGE_DRUM_RADIUS_CM);
+    // just a test
+    VL53L4ED thing = VL53L4ED("/dev/i2c0", &i2c_config, "/dev/gpio0");
+    
+    
 
 
-    controller.init();
+    thing.init();
 
-    controller.run();
+    thing.run();
 
 
     return 0;
