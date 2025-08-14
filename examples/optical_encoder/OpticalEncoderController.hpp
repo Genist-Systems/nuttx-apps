@@ -19,7 +19,7 @@ public:
         METERS_PER_SECOND
     };
 
-    OpticalEncoderController(const char* pinA_devName, const char* pinB_devName,  const int PPR, const int signo, const float initial_length, const float drum_radius);
+    OpticalEncoderController(const char* pinA_devName, const char* pinB_devName,  const int PPR, const int signo, const int initial_length, const int drum_radius);
     ~OpticalEncoderController();
 
     bool init();

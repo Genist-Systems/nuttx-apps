@@ -3,7 +3,7 @@
 #define PI 3.14159265358979323846
 
 
-OpticalEncoderController::OpticalEncoderController(const char* pinA_devName, const char* pinB_devName,  const int PPR, const int signo, const float initial_length, const float drum_radius) :
+OpticalEncoderController::OpticalEncoderController(const char* pinA_devName, const char* pinB_devName,  const int PPR, const int signo, const int initial_length, const int drum_radius) :
                                                     _pinA(), _pinB(), _pinA_devName(pinA_devName), _pinB_devName(pinB_devName), _ppr(PPR), _signo(signo), _length(initial_length), _drum_radius(drum_radius / 1000) {}
 
 OpticalEncoderController::~OpticalEncoderController() = default;

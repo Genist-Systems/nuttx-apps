@@ -174,7 +174,7 @@ bool NAU7802::enable(bool flag)
 bool NAU7802::available()
 {
     uint8_t val;
-    if (!_i2c.readRegister(NAU7802_PU_CTRL, &val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_PU_CTRL), &val, 1))
     {
         perror("NAU7802: Failed to read PU_CTRL register in available()");
         return false;
@@ -191,7 +191,7 @@ bool NAU7802::setChannel(uint8_t channel)
         channel = 1;
 
     uint8_t reg_val;
-    if (!_i2c.readRegister(NAU7802_CTRL2, &reg_val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL2), &reg_val, 1))
     {
         perror("NAU7802: Failed to read CTRL2 register");
         return false;
@@ -201,7 +201,7 @@ bool NAU7802::setChannel(uint8_t channel)
     reg_val &= ~(1 << 7);            // Clear bit 7
     reg_val |= (channel << 7);       // Set bit 7 if channel == 1
 
-    if (!_i2c.writeRegister(NAU7802_CTRL2, reg_val))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_CTRL2), reg_val))
     {
         perror("NAU7802: Failed to write CTRL2 register");
         return false;
@@ -216,7 +216,7 @@ int32_t NAU7802::read()
     uint8_t buffer[3] = {0};
 
     // Read 3 bytes from register 0x12 (NAU7802_ADCO_B2, MSB first)
-    if (!_i2c.readRegister(NAU7802_ADCO_B2, buffer, 3))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_ADCO_B2), buffer, 3))
     {
         perror("NAU7802: Failed to read ADC output registers");
         return 0;
@@ -280,7 +280,7 @@ bool NAU7802::setLDO(NAU7802_LDOVoltage voltage)
 {
     // First: Set or clear AVDDS bit (bit 7 of PU_CTRL)
     uint8_t pu_ctrl;
-    if (!_i2c.readRegister(NAU7802_PU_CTRL, &pu_ctrl, 1)) {
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_PU_CTRL), &pu_ctrl, 1)) {
         perror("NAU7802: Failed to read PU_CTRL register");
         return false;
     }
@@ -325,7 +325,7 @@ bool NAU7802::setLDO(NAU7802_LDOVoltage voltage)
 NAU7802_LDOVoltage NAU7802::getLDO()
 {
     uint8_t pu_ctrl;
-    if (!_i2c.readRegister(NAU7802_PU_CTRL, &pu_ctrl, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_PU_CTRL), &pu_ctrl, 1))
     {
         perror("NAU7802: Failed to read PU_CTRL register in getLDO()");
         return NAU7802_INVALID;

@@ -78,7 +78,7 @@ extern "C" int loadcell_main(int argc, FAR char *argv[])
                         &i2c_mux_pins, 
                         CONFIG_EXAMPLES_LOADCELL_RATED_KG);
 
-    controller.begin();
+    controller.init();
 
     controller.run();
 

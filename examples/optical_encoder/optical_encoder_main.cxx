@@ -51,8 +51,6 @@ extern "C" int optical_encoder_main(int argc, FAR char *argv[])
                                                                     CONFIG_EXAMPLES_OPTICALENCODER_SIGNO, 
                                                                     CONFIG_EXAMPLES_OPTICALENCODER_INITIAL_LENGTH_METERS, 
                                                                     CONFIG_EXAMPLES_OPTICALENCODER_AVERAGE_DRUM_RADIUS_CM);
-
-
     controller.init();
 
     controller.run();

@@ -35,8 +35,7 @@ CXXSRCS = NAU7802.cxx \
           LoadCellController.cxx \
           loadcell_main.cxx \
           $(TOPDIR)/drivers/esp32_peripherals/esp32_gpio.cxx \
-          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
-          $(APPDIR)/cpputils/MQueue/MQueue.cxx
+          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx
 
 
 
