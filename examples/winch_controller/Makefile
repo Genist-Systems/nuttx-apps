@@ -31,12 +31,13 @@ MODULE    = $(CONFIG_EXAMPLES_WINCH_CONTROLLER)
 # Source files
 CSRCS =
 CXXSRCS = winch_controller_main.cxx \
-		$(TOPDIR)/drivers/esp32_peripherals/esp32_pwm.cxx \
-		$(APPDIR)/cpputils/MQueue/MQueue.cxx
+		WinchController.cxx \
+		$(TOPDIR)/drivers/esp32_peripherals/esp32_pwm.cxx
 
 
 
 CXXFLAGS += -I$(APPDIR)/cpputils/MQueue
+CXXFLAGS += -I$(APPDIR)/examples/master_controller
 
 
 

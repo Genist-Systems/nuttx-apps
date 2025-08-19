@@ -20,6 +20,6 @@
 #
 ############################################################################/
 
-ifneq ($(CONFIG_EXAMPLES_PROXIMITYSENSOR),)
+ifneq ($(CONFIG_EXAMPLES_PROXIMITYCONTROLLER),)
 CONFIGURED_APPS += $(APPDIR)/examples/proximity_controller
 endif

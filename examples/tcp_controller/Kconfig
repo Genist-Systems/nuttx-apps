@@ -10,7 +10,7 @@ config EXAMPLES_TCPCONTROLLER
 
 if EXAMPLES_TCPCONTROLLER
 
-config EXAMPLES_TCP_CONTROLLER_PROGNAME
+config EXAMPLES_TCPCONTROLLER_PROGNAME
     string "TCP Controller program name"
     default "tcp_controller"
     help

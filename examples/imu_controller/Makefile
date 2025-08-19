@@ -33,8 +33,7 @@ CSRCS =
 CXXSRCS = BMI323.cxx \
           IMUController.cxx \
           imu_controller_main.cxx \
-          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx \
-          $(APPDIR)/cpputils/MQueue/MQueue.cxx
+          $(TOPDIR)/drivers/esp32_peripherals/esp32_i2c.cxx
 
 
 

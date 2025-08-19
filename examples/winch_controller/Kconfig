@@ -2,39 +2,39 @@
 # Winch Controller Application Configuration
 #
 
-config EXAMPLES_WINCH_CONTROLLER
+config EXAMPLES_WINCHCONTROLLER
     bool "Winch Controller Example"
     default n
     help
         Winch Controller example application.
 
-if EXAMPLES_WINCH_CONTROLLER
+if EXAMPLES_WINCHCONTROLLER
 
-config EXAMPLES_WINCH_CONTROLLER_PROGNAME
+config EXAMPLES_WINCHCONTROLLER_PROGNAME
     string "Winch Controller program name"
     default "winch_controller"
     help
         This is the name of the NSH command or ELF binary that will be installed and used to run the Winch Controller.
 
-config EXAMPLES_WINCH_CONTROLLER_PRIORITY
+config EXAMPLES_WINCHCONTROLLER_PRIORITY
     int "Winch Controller task priority"
     default 100
     help
         Priority of the Winch Controller task if run as a background thread.
 
-config EXAMPLES_WINCH_CONTROLLER_STACKSIZE
+config EXAMPLES_WINCHCONTROLLER_STACKSIZE
     int "Winch Controller stack size"
     default DEFAULT_TASK_STACKSIZE
     help
         Stack size for the Winch Controller task.
 
-config EXAMPLES_WINCH_CONTROLLER_MQUEUE_NAME
+config EXAMPLES_WINCHCONTROLLER_MQUEUE_NAME
     string "Winch Controller message queue name"
     default "/mqwinch"
     help
         The name of the POSIX message queue used by the Winch Controller.
 
-config EXAMPLES_WINCH_CONTROLLER_MAX_REEL_SPEED_PERCENT
+config EXAMPLES_WINCHCONTROLLER_MAX_REEL_SPEED_PERCENT
     int "Winch Controller maximum speed percent"
     default 100
     help

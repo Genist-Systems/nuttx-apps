@@ -48,7 +48,7 @@ extern "C" {
 extern "C" int master_controller_main(int argc, FAR char *argv[])
 {
     
-    const struct MQueue_Settings settings =
+    const struct MQueue_Settings mq_settings =
     {
         .flags = O_CREAT | O_RDWR | O_NONBLOCK,
         .mode = 0644,
@@ -63,7 +63,7 @@ extern "C" int master_controller_main(int argc, FAR char *argv[])
                                                     CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_WINCHCONTROL_NAME, 
                                                     CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_LOADCELL_NAME, 
                                                     CONFIG_EXAMPLES_MASTER_CONTROLLER_MQUEUE_OPTICALENCODER_NAME, 
-                                                    settings);
+                                                    mq_settings);
 
     controller.run();
 

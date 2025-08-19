@@ -7,7 +7,6 @@ LoadCellController::LoadCellController(struct NAU7802Config* load_cell_config,
                                        struct TCA9548APins* i2c_mux_pins, 
                                        uint16_t load_cell_rated_kg)
 : _adcConfig(load_cell_config),
-  _muxPins(i2c_mux_pins),
   _adc(i2c_devName, i2c_config),
   _mux(i2c_mux_pins->sel2, i2c_mux_pins->sel1, i2c_mux_pins->sel0),
   _numLoadCells(CONFIG_EXAMPLES_NUM_LOADCELLS),

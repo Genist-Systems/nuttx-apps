@@ -40,7 +40,6 @@ class LoadCellController {
 
     private:
         struct NAU7802Config* _adcConfig;
-        struct TCA9548APins* _muxPins;
 
         NAU7802 _adc;
         TCA9548A _mux;

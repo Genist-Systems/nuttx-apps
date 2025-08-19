@@ -20,11 +20,11 @@ void WinchController::run()
     
     for (;;)
     {
-        WinchControl msg{};
+        WinchControlData msg{};
         MqResult res = _mq.receiveMostRecent(msg);
 
         if (res == MqResult::Success) {
-            if (msg.direction == WINCH_DIRECTION::DOWN)
+            if (msg.direction == WinchDirection::DOWN)
             {
                 _pwm.editDuty(_normalizeDuty(msg.new_duty));
                 // _pwm2.editDuty(0);

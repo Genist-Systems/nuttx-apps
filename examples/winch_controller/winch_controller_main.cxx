@@ -51,7 +51,7 @@ extern "C" int winch_controller_main(int argc, FAR char *argv[])
         .flags = O_CREAT | O_RDWR | O_NONBLOCK,
         .mode = 0644,
         .maxMsg = 8,
-        .msgSize = sizeof(WinchControl)
+        .msgSize = sizeof(WinchControlData)
     };
 
     pwm_info_s pwm_cfg = 

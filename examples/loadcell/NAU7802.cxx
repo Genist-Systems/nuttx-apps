@@ -20,7 +20,7 @@ bool NAU7802::begin()
 
     // Device ID check — ID register should return 0x0F in low nibble
     uint8_t id_val = 0;
-    if (!_i2c.readRegister(NAU7802_REVISION_ID, &id_val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_REVISION_ID), &id_val, 1))
     {
         perror("NAU7802: Failed to read device ID register");
         return false;
@@ -65,7 +65,7 @@ bool NAU7802::begin()
 
     // Disable ADC chopper clock — bits [5:4] of ADC register
     uint8_t adc_val;
-    if (!_i2c.readRegister(NAU7802_ADC, &adc_val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_ADC), &adc_val, 1))
     {
         perror("NAU7802: Failed to read ADC register");
         return false;
@@ -74,7 +74,7 @@ bool NAU7802::begin()
     adc_val &= ~(0x3 << 4);
     adc_val |= (0x3 << 4);
 
-    if (!_i2c.writeRegister(NAU7802_ADC, adc_val))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_ADC), adc_val))
     {
         perror("NAU7802: Failed to write ADC register");
         return false;
@@ -82,14 +82,14 @@ bool NAU7802::begin()
 
     // Use low ESR caps — clear bit 6 in PGA register
     uint8_t pga_val;
-    if (!_i2c.readRegister(NAU7802_PGA, &pga_val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_PGA), &pga_val, 1))
     {
         perror("NAU7802: Failed to read PGA register");
         return false;
     }
 
     pga_val &= ~(1 << 6);
-    if (!_i2c.writeRegister(NAU7802_PGA, pga_val))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_PGA), pga_val))
     {
         perror("NAU7802: Failed to write PGA register");
         return false;
@@ -97,14 +97,14 @@ bool NAU7802::begin()
 
     // Enable PGA stabilizer cap — set bit 7 in POWER register
     uint8_t pwr_val;
-    if (!_i2c.readRegister(NAU7802_POWER, &pwr_val, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_POWER), &pwr_val, 1))
     {
         perror("NAU7802: Failed to read POWER register");
         return false;
     }
 
     pwr_val |= (1 << 7);
-    if (!_i2c.writeRegister(NAU7802_POWER, pwr_val))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_POWER), pwr_val))
     {
         perror("NAU7802: Failed to write POWER register");
         return false;
@@ -289,7 +289,7 @@ bool NAU7802::setLDO(NAU7802_LDOVoltage voltage)
     {
         // Use external AVDD supply: clear bit 7
         pu_ctrl &= ~(1 << 7);
-        if (!_i2c.writeRegister(NAU7802_PU_CTRL, pu_ctrl)) {
+        if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_PU_CTRL), pu_ctrl)) {
             perror("NAU7802: Failed to write AVDDS bit for external LDO");
             return false;
         }
@@ -298,14 +298,14 @@ bool NAU7802::setLDO(NAU7802_LDOVoltage voltage)
 
     // Otherwise, use internal LDO: set bit 7
     pu_ctrl |= (1 << 7);
-    if (!_i2c.writeRegister(NAU7802_PU_CTRL, pu_ctrl) == false) {
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_PU_CTRL), pu_ctrl) == false) {
         perror("NAU7802: Failed to enable internal LDO");
         return false;
     }
 
     // Now write 3-bit LDO voltage value to bits [5:3] in CTRL1 (0x01)
     uint8_t ctrl1;
-    if (!_i2c.readRegister(NAU7802_CTRL1, &ctrl1, 1)) {
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL1), &ctrl1, 1)) {
         perror("NAU7802: Failed to read CTRL1 register");
         return false;
     }
@@ -313,7 +313,7 @@ bool NAU7802::setLDO(NAU7802_LDOVoltage voltage)
     ctrl1 &= ~(0b111 << 3);             // Clear bits 5:3
     ctrl1 |= (voltage & 0b111) << 3;    // Set new voltage
 
-    if (!_i2c.writeRegister(NAU7802_CTRL1, ctrl1)) {
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_CTRL1), ctrl1)) {
         perror("NAU7802: Failed to write LDO voltage bits to CTRL1");
         return false;
     }
@@ -340,7 +340,7 @@ NAU7802_LDOVoltage NAU7802::getLDO()
 
     // Otherwise, read VLDO value from CTRL1 bits [5:3]
     uint8_t ctrl1;
-    if (!_i2c.readRegister(NAU7802_CTRL1, &ctrl1, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL1), &ctrl1, 1))
     {
         perror("NAU7802: Failed to read CTRL1 register in getLDO()");
         return NAU7802_INVALID;
@@ -356,7 +356,7 @@ bool NAU7802::setGain(NAU7802_Gain gain)
     uint8_t ctrl1;
 
     // Read CTRL1 register (0x01)
-    if (!_i2c.readRegister(NAU7802_CTRL1, &ctrl1, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL1), &ctrl1, 1))
     {
         perror("NAU7802: Failed to read CTRL1 register in setGain()");
         return false;
@@ -369,7 +369,7 @@ bool NAU7802::setGain(NAU7802_Gain gain)
     ctrl1 |= (gain & 0x07);
 
     // Write back
-    if (!_i2c.writeRegister(NAU7802_CTRL1, ctrl1))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_CTRL1), ctrl1))
     {
         perror("NAU7802: Failed to write CTRL1 register in setGain()");
         return false;
@@ -384,7 +384,7 @@ NAU7802_Gain NAU7802::getGain()
     uint8_t ctrl1;
 
     // Read the CTRL1 register (0x01)
-    if (!_i2c.readRegister(NAU7802_CTRL1, &ctrl1, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL1), &ctrl1, 1))
     {
         perror("NAU7802: Failed to read CTRL1 register in getGain()");
         return NAU7802_GAIN_INVALID;  // You can define this value in your enum
@@ -402,7 +402,7 @@ bool NAU7802::setRate(NAU7802_SampleRate rate)
     uint8_t ctrl2;
 
     // Read CTRL2 register (0x02)
-    if (!_i2c.readRegister(NAU7802_CTRL2, &ctrl2, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL2), &ctrl2, 1))
     {
         perror("NAU7802: Failed to read CTRL2 register in setRate()");
         return false;
@@ -415,7 +415,7 @@ bool NAU7802::setRate(NAU7802_SampleRate rate)
     ctrl2 |= (static_cast<uint8_t>(rate) & 0b111) << 4;
 
     // Write back
-    if (!_i2c.writeRegister(NAU7802_CTRL2, ctrl2))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_CTRL2), ctrl2))
     {
         perror("NAU7802: Failed to write CTRL2 register in setRate()");
         return false;
@@ -430,7 +430,7 @@ NAU7802_SampleRate NAU7802::getRate()
     uint8_t ctrl2;
 
     // Read the CTRL2 register (0x02)
-    if (!_i2c.readRegister(NAU7802_CTRL2, &ctrl2, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL2), &ctrl2, 1))
     {
         perror("NAU7802: Failed to read CTRL2 register in getRate()");
         return NAU7802_RATE_INVALID;  // You can define this in your enum
@@ -448,7 +448,7 @@ bool NAU7802::calibrate(NAU7802_Calibration mode)
     uint8_t ctrl2;
 
     // Read CTRL2 register (0x02)
-    if (!_i2c.readRegister(NAU7802_CTRL2, &ctrl2, 1))
+    if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL2), &ctrl2, 1))
     {
         perror("NAU7802: Failed to read CTRL2 register in calibrate()");
         return false;
@@ -462,7 +462,7 @@ bool NAU7802::calibrate(NAU7802_Calibration mode)
     ctrl2 |= (1 << 2);
 
     // Write modified CTRL2 back
-    if (!_i2c.writeRegister(NAU7802_CTRL2, ctrl2))
+    if (!_i2c.writeRegister(static_cast<uint8_t>(NAU7802_CTRL2), ctrl2))
     {
         perror("NAU7802: Failed to start calibration");
         return false;
@@ -473,7 +473,7 @@ bool NAU7802::calibrate(NAU7802_Calibration mode)
     do
     {
         usleep(10 * 1000);
-        if (!_i2c.readRegister(NAU7802_CTRL2, &ctrl2, 1))
+        if (!_i2c.readRegister(static_cast<uint8_t>(NAU7802_CTRL2), &ctrl2, 1))
         {
             perror("NAU7802: Failed to poll calibration status");
             return false;

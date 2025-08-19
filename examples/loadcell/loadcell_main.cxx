@@ -72,6 +72,11 @@ extern "C" int loadcell_main(int argc, FAR char *argv[])
         .sel0 = CONFIG_EXAMPLES_LOADCELL_MUX_SELECT_PIN_BIT_0
     };
 
+    // if (i2c_mux_pins.sel2 == nullptr || i2c_mux_pins.sel1 == nullptr || i2c_mux_pins.sel0 == nullptr)
+    //     printf("nullptr\r\n");
+    // else
+    //     printf("nothing\r\n");
+
     LoadCellController controller = LoadCellController(&load_cell_config, 
                         CONFIG_EXAMPLES_LOADCELL_I2C_FD, 
                         &i2c_config,
@@ -81,6 +86,7 @@ extern "C" int loadcell_main(int argc, FAR char *argv[])
     controller.init();
 
     controller.run();
+
 
 
     return 0;

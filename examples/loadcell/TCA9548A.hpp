@@ -1,9 +1,7 @@
 #pragma once
 
 #include "esp32_peripherals/esp32_peripherals.hpp"
-
 #include <cstdint>
-#include <array>
 
 using namespace ESP32::GPIO;
 
@@ -17,9 +15,8 @@ class TCA9548A
         uint8_t getSelect(void);
     
     private:
-        std::array<GPIO, 3> _sel_pins;
-        bool _pinSetupStatus = true;
+        GPIO _sel_pins[3]; 
 
+        bool _pinSetupStatus = true;
         uint8_t _select = 0;
 };
-

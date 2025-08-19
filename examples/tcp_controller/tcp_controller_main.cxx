@@ -44,7 +44,7 @@
 
 
 
-extern "C" int master_controller_main(int argc, FAR char *argv[])
+extern "C" int tcp_controller_main(int argc, FAR char *argv[])
 {
     struct MQueue_Settings mq_settings =
     {

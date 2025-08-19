@@ -3,6 +3,8 @@
 #include <stdint.h>
 
 #include "MQueue.hpp"
+#include "esp32_peripherals/esp32_peripherals.hpp"
+#include "master_controller_main.hpp"
 
 using namespace ESP32::PWM;
 
@@ -15,7 +17,7 @@ class WinchController
         void run();
     private:
 
-        MQueue _mq;
+        MQueue<WinchControlData> _mq;
         PWM _pwm;
         const uint8_t _maxSpeedPercent = 100;
 

@@ -15,7 +15,7 @@ TCPController::TCPController(const char* mqueue_drone_to_stretcher_name,
 #if defined(CONFIG_EXAMPLES_MASTERCONTROLLER)
     : _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, mq_settings), 
       _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, mq_settings),
-      _server(tcp_settings)   // <-- here
+      _server(tcp_settings) 
 #elif defined(CONFIG_EXAMPLES_SLAVECONTROLLER)
     : _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, mq_settings), 
       _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, mq_settings),

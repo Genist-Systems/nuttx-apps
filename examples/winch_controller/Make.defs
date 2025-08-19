@@ -20,6 +20,6 @@
 #
 ############################################################################/
 
-ifneq ($(CONFIG_EXAMPLES_WINCH_CONTROLLER),)
+ifneq ($(CONFIG_EXAMPLES_WINCHCONTROLLER),)
 CONFIGURED_APPS += $(APPDIR)/examples/winch_controller
 endif

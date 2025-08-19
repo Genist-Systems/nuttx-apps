@@ -7,14 +7,14 @@ MasterController::MasterController(const char* mqueue_drone_to_stretcher_name,
                         const char* mqueue_winchcontrol_name, 
                         const char* mqueue_loadcell_name, 
                         const char* mqueue_opticalencoder_name, 
-                        const struct MQueue_Settings& settings) :
-                        _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, settings), 
-                        _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, settings),
-                        _mq_drone_to_flight_controller(mqueue_drone_to_flight_controller_name, settings), 
-                        _mq_flight_controller_to_drone(mqueue_flight_controller_to_drone_name, settings),
-                        _mq_winch(mqueue_winchcontrol_name, settings), 
-                        _mq_loadcell(mqueue_loadcell_name, settings), 
-                        _mq_opticalencoder(mqueue_opticalencoder_name, settings)
+                        const struct MQueue_Settings& mq_settings) :
+                        _mq_drone_to_stretcher(mqueue_drone_to_stretcher_name, mq_settings), 
+                        _mq_stretcher_to_drone(mqueue_stretcher_to_drone_name, mq_settings),
+                        _mq_drone_to_flight_controller(mqueue_drone_to_flight_controller_name, mq_settings), 
+                        _mq_flight_controller_to_drone(mqueue_flight_controller_to_drone_name, mq_settings),
+                        _mq_winch(mqueue_winchcontrol_name, mq_settings), 
+                        _mq_loadcell(mqueue_loadcell_name, mq_settings), 
+                        _mq_opticalencoder(mqueue_opticalencoder_name, mq_settings)
                         {
                             
                         }

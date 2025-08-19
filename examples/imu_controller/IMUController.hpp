@@ -2,6 +2,7 @@
 
 #include "BMI323.hpp"
 #include "MQueue.hpp"
+#include "slave_controller_main.hpp"
 
 
 class IMUController
@@ -14,6 +15,6 @@ class IMUController
         bool init();
         void run();
     private:
-        MQueue _mq<IMUData>;
+        MQueue<IMUData> _mq;
         BMI323 _imu;
 };

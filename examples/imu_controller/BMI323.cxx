@@ -25,7 +25,7 @@ bool BMI323::init()
     }
 
     uint8_t buffer[2];
-    if (!_i2c.readRegister(DEVICE_ID_REG, buffer, sizeof(buffer)))
+    if (!_i2c.readRegister(static_cast<uint8_t>(DEVICE_ID_REG), buffer, sizeof(buffer)))
     {
         printf("Failed to read BMI device ID\n");
         return false;

@@ -2,27 +2,27 @@
 # Proximity Sensor Example Application Configuration
 #
 
-config EXAMPLES_PROXIMITYSENSOR
+config EXAMPLES_PROXIMITYCONTROLLER
     bool "Proximity Sensor Example"
     default n
     help
         Proximity Sensor example application.
 
-if EXAMPLES_PROXIMITYSENSOR
+if EXAMPLES_PROXIMITYCONTROLLER
 
-config EXAMPLES_PROXIMITYSENSOR_PROGNAME
+config EXAMPLES_PROXIMITYCONTROLLER_PROGNAME
     string "Proximity Sensor program name"
     default "proximity_sensor"
     help
         This is the name of the NSH command or ELF binary that will be installed and used to run the Proximity Sensor application.
 
-config EXAMPLES_PROXIMITYSENSOR_PRIORITY
+config EXAMPLES_PROXIMITYCONTROLLER_PRIORITY
     int "Proximity Sensor task priority"
     default 100
     help
         Priority of the Proximity Sensor task if run as a background thread.
 
-config EXAMPLES_PROXIMITYSENSOR_STACKSIZE
+config EXAMPLES_PROXIMITYCONTROLLER_STACKSIZE
     int "Proximity Sensor stack size"
     default DEFAULT_TASK_STACKSIZE
     help

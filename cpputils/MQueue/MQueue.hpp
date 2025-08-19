@@ -35,7 +35,7 @@ public:
     {
         struct mq_attr attr {};
         attr.mq_flags   = 0;
-        attr.mq_maxmsg  = base_settings.maxMsg;
+        attr.mq_maxmsg  = 8;
         attr.mq_msgsize = sizeof(T);
         attr.mq_curmsgs = 0;
 

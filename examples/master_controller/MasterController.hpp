@@ -15,7 +15,7 @@ class MasterController
                         const char* mqueue_winchcontrol_name, 
                         const char* mqueue_loadcell_name, 
                         const char* mqueue_opticalencoder_name, 
-                        const struct MQueue_Settings& settings);
+                        const struct MQueue_Settings& mq_settings);
 
         ~MasterController();
 
